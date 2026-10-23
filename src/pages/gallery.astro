@@ -1,0 +1,127 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Header from '../components/Header.astro';
+import GalleryAlbum from '../components/GalleryAlbum.astro';
+import GalleryLightbox from '../components/GalleryLightbox.astro';
+import Footer from '../components/Footer.astro';
+
+// Sample gallery data - will be replaced with WordPress API
+const galleryAlbums = [
+  {
+    title: "Makara Sankranti 2025",
+    photos: [
+      { url: "https://picsum.photos/800/600?random=10", alt: "Sankranti celebration 1" },
+      { url: "https://picsum.photos/800/600?random=11", alt: "Sankranti celebration 2" },
+      { url: "https://picsum.photos/800/600?random=12", alt: "Sankranti celebration 3" },
+      { url: "https://picsum.photos/800/600?random=13", alt: "Sankranti celebration 4" },
+      { url: "https://picsum.photos/800/600?random=14", alt: "Sankranti celebration 5" },
+      { url: "https://picsum.photos/800/600?random=15", alt: "Sankranti celebration 6" },
+    ]
+  },
+  {
+    title: "Diwali Festival 2024",
+    photos: [
+      { url: "https://picsum.photos/800/600?random=20", alt: "Diwali celebration 1" },
+      { url: "https://picsum.photos/800/600?random=21", alt: "Diwali celebration 2" },
+      { url: "https://picsum.photos/800/600?random=22", alt: "Diwali celebration 3" },
+      { url: "https://picsum.photos/800/600?random=23", alt: "Diwali celebration 4" },
+      { url: "https://picsum.photos/800/600?random=24", alt: "Diwali celebration 5" },
+    ]
+  },
+  {
+    title: "Navaratri Celebrations",
+    photos: [
+      { url: "https://picsum.photos/800/600?random=30", alt: "Navaratri 1" },
+      { url: "https://picsum.photos/800/600?random=31", alt: "Navaratri 2" },
+      { url: "https://picsum.photos/800/600?random=32", alt: "Navaratri 3" },
+      { url: "https://picsum.photos/800/600?random=33", alt: "Navaratri 4" },
+      { url: "https://picsum.photos/800/600?random=34", alt: "Navaratri 5" },
+      { url: "https://picsum.photos/800/600?random=35", alt: "Navaratri 6" },
+    ]
+  },
+  {
+    title: "Temple Anniversary",
+    photos: [
+      { url: "https://picsum.photos/800/600?random=40", alt: "Anniversary 1" },
+      { url: "https://picsum.photos/800/600?random=41", alt: "Anniversary 2" },
+      { url: "https://picsum.photos/800/600?random=42", alt: "Anniversary 3" },
+      { url: "https://picsum.photos/800/600?random=43", alt: "Anniversary 4" },
+    ]
+  }
+];
+
+// Sample YouTube videos
+const videos = [
+  {
+    title: "Sri Balaji Temple - Grand Opening",
+    youtubeId: "dQw4w9WgXcQ",
+    description: "Watch the grand opening ceremony of Sri Balaji Temple in Bellevue, WA."
+  },
+  {
+    title: "Diwali Celebration 2024",
+    youtubeId: "dQw4w9WgXcQ",
+    description: "Highlights from our Diwali festival celebrations with cultural programs."
+  },
+  {
+    title: "Daily Temple Pooja",
+    youtubeId: "dQw4w9WgXcQ",
+    description: "Experience the daily pooja rituals and spiritual atmosphere at the temple."
+  }
+];
+---
+
+<Layout title="Gallery | Sri Balaji Temple">
+  <Header />
+  
+  <div class="pt-24 pb-20 px-4">
+    <div class="max-w-6xl mx-auto">
+      <div class="text-center mb-12">
+        <h1 class="text-4xl md:text-5xl font-serif font-bold text-slate-800 mb-4">Photo & Video Gallery</h1>
+        <p class="text-slate-600 text-lg max-w-2xl mx-auto">
+          Explore our collection of memorable moments from temple festivals, celebrations, and cultural events.
+        </p>
+      </div>
+
+      <!-- PHOTO GALLERY SECTION -->
+      <section class="mb-20">
+        <h2 class="text-2xl font-serif font-bold text-slate-800 mb-8">Photo Albums</h2>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+          {galleryAlbums.map((album) => (
+            <GalleryAlbum title={album.title} photos={album.photos} />
+          ))}
+        </div>
+      </section>
+
+      <!-- VIDEO GALLERY SECTION -->
+      <section>
+        <h2 class="text-2xl font-serif font-bold text-slate-800 mb-8">Video Gallery</h2>
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          {videos.map((video) => (
+            <div class="rounded-2xl bg-white/80 border border-amber-200/50 overflow-hidden shadow-lg">
+              <div class="aspect-video">
+                <iframe
+                  src={`https://www.youtube.com/embed/${video.youtubeId}`}
+                  title={video.title}
+                  frameborder="0"
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                  allowfullscreen
+                  class="w-full h-full"
+                ></iframe>
+              </div>
+              <div class="p-6">
+                <h3 class="text-lg font-bold text-slate-800 mb-2">{video.title}</h3>
+                <p class="text-slate-600 text-sm">{video.description}</p>
+              </div>
+            </div>
+          ))}
+        </div>
+      </section>
+    </div>
+  </div>
+
+  <!-- GALLERY LIGHTBOX -->
+  <GalleryLightbox albums={galleryAlbums} />
+
+  <!-- FOOTER -->
+  <Footer />
+</Layout>

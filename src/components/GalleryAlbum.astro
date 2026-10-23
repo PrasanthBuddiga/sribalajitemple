@@ -1,0 +1,38 @@
+---
+interface Photo {
+  url: string;
+  alt: string;
+}
+
+interface Props {
+  title: string;
+  photos: Photo[];
+}
+
+const { title, photos } = Astro.props;
+const escapedTitle = title.replace(/'/g, "\\'");
+---
+
+<div class="rounded-2xl bg-white/80 border border-amber-200/50 overflow-hidden shadow-lg">
+  <div class="p-6 border-b border-amber-200/50">
+    <h3 class="text-xl font-bold text-slate-800">{title}</h3>
+  </div>
+  
+  <div class="p-4 grid grid-cols-2 md:grid-cols-3 gap-3">
+    {photos.map((photo, index) => (
+      <div 
+        class="relative aspect-square overflow-hidden rounded-lg cursor-pointer group"
+        onclick={`openGallery(${index}, '${escapedTitle}')`}
+      >
+        <img 
+          src={photo.url} 
+          alt={photo.alt} 
+          class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" 
+        />
+        <div class="absolute inset-0 bg-amber-900/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+          <span class="text-white text-xs font-semibold">View</span>
+        </div>
+      </div>
+    ))}
+  </div>
+</div>

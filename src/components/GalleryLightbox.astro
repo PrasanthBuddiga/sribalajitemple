@@ -1,0 +1,109 @@
+---
+interface Photo {
+  url: string;
+  alt: string;
+}
+
+interface Props {
+  albums: {
+    title: string;
+    photos: Photo[];
+  }[];
+}
+
+const { albums } = Astro.props;
+
+const albumsForClient = albums.map(album => ({
+  title: album.title,
+  photos: album.photos.map(p => ({ url: p.url, alt: p.alt }))
+}));
+---
+
+<!-- GALLERY LIGHTBOX MODAL -->
+<div id="galleryLightbox" class="fixed inset-0 z-50 hidden bg-slate-900/70 backdrop-blur-md flex items-center justify-center p-4" data-albums={JSON.stringify(albumsForClient)}>
+  <button onclick="closeGallery()" class="absolute top-4 right-4 z-10 w-10 h-10 rounded-full bg-slate-100 text-slate-600 hover:text-slate-800 hover:bg-slate-200 flex items-center justify-center font-bold transition-colors">
+    ✕
+  </button>
+  
+  <button onclick="prevPhoto()" class="absolute left-4 z-10 w-12 h-12 rounded-full bg-white/80 text-slate-600 hover:text-slate-800 flex items-center justify-center font-bold backdrop-blur-sm hover:bg-white transition-colors shadow-md">
+    ←
+  </button>
+  
+  <button onclick="nextPhoto()" class="absolute right-4 z-10 w-12 h-12 rounded-full bg-white/80 text-slate-600 hover:text-slate-800 flex items-center justify-center font-bold backdrop-blur-sm hover:bg-white transition-colors shadow-md">
+    →
+  </button>
+  
+  <div class="max-w-4xl w-full">
+    <p id="galleryAlbumTitle" class="text-center text-amber-600 text-sm font-medium mb-2"></p>
+    <div class="max-h-[85vh] overflow-hidden rounded-xl">
+      <img id="galleryImage" src="" alt="" class="w-full h-auto max-h-[85vh] object-contain" />
+    </div>
+    <p id="galleryCounter" class="text-center text-slate-600 text-sm mt-4"></p>
+  </div>
+</div>
+
+<script is:inline>
+  /** @type {Array<{url: string, alt: string}>} */
+  let currentPhotos = [];
+  let currentIndex = 0;
+
+  /**
+   * @param {number} index
+   * @param {string} albumTitle
+   */
+  function openGallery(index, albumTitle) {
+    const lightboxEl = document.getElementById('galleryLightbox');
+    if (!lightboxEl?.dataset.albums) return;
+    
+    const albumsData = JSON.parse(lightboxEl.dataset.albums);
+    const album = albumsData.find((/** @type {{title: string}} */ a) => a.title === albumTitle);
+    if (!album) return;
+    
+    currentPhotos = album.photos;
+    currentIndex = index;
+    
+    updateLightbox();
+    lightboxEl.classList.remove('hidden');
+  }
+
+  function closeGallery() {
+    const lightboxEl = document.getElementById('galleryLightbox');
+    if (lightboxEl) {
+      lightboxEl.classList.add('hidden');
+    }
+  }
+
+  function nextPhoto() {
+    currentIndex = (currentIndex + 1) % currentPhotos.length;
+    updateLightbox();
+  }
+
+  function prevPhoto() {
+    currentIndex = (currentIndex - 1 + currentPhotos.length) % currentPhotos.length;
+    updateLightbox();
+  }
+
+  function updateLightbox() {
+    const photo = currentPhotos[currentIndex];
+    const imgEl = /** @type {HTMLImageElement} */ (document.getElementById('galleryImage'));
+    const counterEl = document.getElementById('galleryCounter');
+    
+    if (imgEl) {
+      imgEl.src = photo.url;
+      imgEl.alt = photo.alt;
+    }
+    if (counterEl) {
+      counterEl.textContent = `${currentIndex + 1} / ${currentPhotos.length}`;
+    }
+  }
+
+  // Keyboard navigation
+  document.addEventListener('keydown', (e) => {
+    const lightbox = document.getElementById('galleryLightbox');
+    if (!lightbox || lightbox.classList.contains('hidden')) return;
+    
+    if (e.key === 'Escape') closeGallery();
+    if (e.key === 'ArrowRight') nextPhoto();
+    if (e.key === 'ArrowLeft') prevPhoto();
+  });
+</script>

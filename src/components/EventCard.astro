@@ -1,0 +1,43 @@
+---
+interface WPPost {
+  id: number;
+  date: string;
+  title: { rendered: string };
+  excerpt: { rendered: string };
+  _embedded?: {
+    'wp:featuredmedia'?: Array<{
+      source_url: string;
+    }>;
+  };
+}
+
+interface Props {
+  event: WPPost;
+}
+
+const { event } = Astro.props;
+const flyerUrl = event._embedded?.['wp:featuredmedia']?.[0]?.source_url || 'https://via.placeholder.com/600x800?text=Temple+Event';
+const escapedTitle = JSON.stringify(event.title.rendered);
+---
+
+<div class="group rounded-2xl bg-white/80 border border-amber-200/50 hover:border-amber-400 transition-all duration-300 overflow-hidden shadow-lg flex flex-col">
+  <!-- THUMBNAIL (CLICK OPENS FULL FLYER) -->
+  <div class="relative h-52 overflow-hidden cursor-pointer" onclick={`openModal('${flyerUrl}', ${escapedTitle})`}>
+    <img src={flyerUrl} alt={event.title.rendered} class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" />
+    <div class="absolute inset-0 bg-amber-900/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center text-xs font-semibold text-white uppercase tracking-wider backdrop-blur-xs">
+      Click to View Flyer
+    </div>
+  </div>
+
+  <!-- CARD CONTENT -->
+  <div class="p-6 flex-1 flex flex-col justify-between">
+    <div>
+      <h3 class="text-xl font-bold text-slate-800 group-hover:text-amber-600 transition-colors" set:html={event.title.rendered} />
+      <div class="text-slate-600 text-sm mt-2 line-clamp-3" set:html={event.excerpt.rendered} />
+    </div>
+
+    <button onclick={`openModal('${flyerUrl}', ${escapedTitle})`} class="mt-6 w-full py-2.5 rounded-lg bg-amber-500 hover:bg-amber-600 text-white text-sm font-medium transition-colors shadow-md hover:shadow-lg">
+      View Event Flyer
+    </button>
+  </div>
+</div>

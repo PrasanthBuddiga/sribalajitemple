@@ -1,0 +1,62 @@
+---
+const currentPage = Astro.url.pathname;
+---
+
+<header class="fixed top-0 left-0 right-0 z-40 bg-white/80 backdrop-blur-md border-b border-amber-200/50 shadow-sm">
+  <nav class="max-w-6xl mx-auto px-4 py-4 flex items-center justify-between">
+    <a href="/" class="text-xl font-serif font-bold text-amber-700 hover:text-amber-600 transition-colors">
+      Sri Balaji Temple
+    </a>
+    
+    <div class="flex items-center gap-4 md:gap-6">
+      <a 
+        href="/" 
+        class={`text-sm font-medium transition-colors ${
+          currentPage === '/' ? 'text-amber-600' : 'text-slate-700 hover:text-amber-600'
+        }`}
+      >
+        Home
+      </a>
+      <a 
+        href="/about" 
+        class={`text-sm font-medium transition-colors ${
+          currentPage === '/about' ? 'text-amber-600' : 'text-slate-700 hover:text-amber-600'
+        }`}
+      >
+        About
+      </a>
+      <a 
+        href="/events" 
+        class={`text-sm font-medium transition-colors ${
+          currentPage === '/events' ? 'text-amber-600' : 'text-slate-700 hover:text-amber-600'
+        }`}
+      >
+        Events
+      </a>
+      <a 
+        href="/gallery" 
+        class={`text-sm font-medium transition-colors ${
+          currentPage === '/gallery' ? 'text-amber-600' : 'text-slate-700 hover:text-amber-600'
+        }`}
+      >
+        Gallery
+      </a>
+      <a 
+        href="/priest-services" 
+        class={`text-sm font-medium transition-colors ${
+          currentPage === '/priest-services' ? 'text-amber-600' : 'text-slate-700 hover:text-amber-600'
+        }`}
+      >
+        Services
+      </a>
+      <a 
+        href="/sponsor" 
+        class={`text-sm font-medium transition-colors ${
+          currentPage === '/sponsor' ? 'text-amber-600' : 'text-slate-700 hover:text-amber-600'
+        }`}
+      >
+        Sponsor
+      </a>
+    </div>
+  </nav>
+</header>

@@ -1,0 +1,138 @@
+[
+  {
+    "id": 1,
+    "date": "2025-01-11T10:30:00",
+    "title": {
+      "rendered": "Monthly Abhishekam"
+    },
+    "excerpt": {
+      "rendered": "Special Abhishekam ceremony performed every 2nd Saturday of the month at 10:30 AM. Join us for this sacred ritual."
+    },
+    "_embedded": {
+      "wp:featuredmedia": [
+        {
+          "source_url": "https://picsum.photos/600/800?random=1"
+        }
+      ]
+    }
+  },
+  {
+    "id": 2,
+    "date": "2025-01-11T18:30:00",
+    "title": {
+      "rendered": "Vishnu Sahasranamam"
+    },
+    "excerpt": {
+      "rendered": "Recitation of the sacred 1000 names of Lord Vishnu every Saturday at 6:30 PM. Participate in this divine chanting."
+    },
+    "_embedded": {
+      "wp:featuredmedia": [
+        {
+          "source_url": "https://picsum.photos/600/800?random=2"
+        }
+      ]
+    }
+  },
+  {
+    "id": 3,
+    "date": "2025-01-15T10:00:00",
+    "title": {
+      "rendered": "Makara Sankranti Celebration"
+    },
+    "excerpt": {
+      "rendered": "Join us for the auspicious Makara Sankranti festival with special poojas, prasadam distribution, and cultural programs starting at 9:00 AM."
+    },
+    "_embedded": {
+      "wp:featuredmedia": [
+        {
+          "source_url": "https://picsum.photos/600/800?random=3"
+        }
+      ]
+    }
+  },
+  {
+    "id": 4,
+    "date": "2025-02-14T18:00:00",
+    "title": {
+      "rendered": "Valentine's Day Special Pooja"
+    },
+    "excerpt": {
+      "rendered": "Special Kalyana Utsavam and blessings for couples seeking divine grace. Register by February 10th."
+    },
+    "_embedded": {
+      "wp:featuredmedia": [
+        {
+          "source_url": "https://picsum.photos/600/800?random=4"
+        }
+      ]
+    }
+  },
+  {
+    "id": 5,
+    "date": "2025-03-01T09:00:00",
+    "title": {
+      "rendered": "Holi Festival of Colors"
+    },
+    "excerpt": {
+      "rendered": "Celebrate the festival of colors with community gathering, special abhishekam, and eco-friendly colors."
+    },
+    "_embedded": {
+      "wp:featuredmedia": [
+        {
+          "source_url": "https://picsum.photos/600/800?random=5"
+        }
+      ]
+    }
+  },
+  {
+    "id": 6,
+    "date": "2025-04-13T07:00:00",
+    "title": {
+      "rendered": "Sri Rama Navami"
+    },
+    "excerpt": {
+      "rendered": "Divine celebration of Lord Rama's birth with special chants, Ramayana recitation, and annadanam."
+    },
+    "_embedded": {
+      "wp:featuredmedia": [
+        {
+          "source_url": "https://picsum.photos/600/800?random=6"
+        }
+      ]
+    }
+  },
+  {
+    "id": 7,
+    "date": "2025-05-01T10:00:00",
+    "title": {
+      "rendered": "Vasanta Navaratri"
+    },
+    "excerpt": {
+      "rendered": "Nine days of divine worship dedicated to Goddess Durga with daily homam and special aratis."
+    },
+    "_embedded": {
+      "wp:featuredmedia": [
+        {
+          "source_url": "https://picsum.photos/600/800?random=7"
+        }
+      ]
+    }
+  },
+  {
+    "id": 8,
+    "date": "2025-06-15T18:00:00",
+    "title": {
+      "rendered": "Annual Temple Anniversary"
+    },
+    "excerpt": {
+      "rendered": "Celebrate our temple's founding day with grand procession, cultural programs, and community feast."
+    },
+    "_embedded": {
+      "wp:featuredmedia": [
+        {
+          "source_url": "https://picsum.photos/600/800?random=8"
+        }
+      ]
+    }
+  }
+]

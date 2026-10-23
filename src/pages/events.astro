@@ -1,0 +1,46 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Header from '../components/Header.astro';
+import EventCard from '../components/EventCard.astro';
+import FlyerModal from '../components/FlyerModal.astro';
+import Footer from '../components/Footer.astro';
+import samplePosts from '../sample-wp-posts.json';
+
+// Use sample data (will be replaced with WordPress API)
+const events = samplePosts;
+---
+
+<Layout title="Events & Poojas | Sri Balaji Temple">
+  <Header />
+  
+  <div class="pt-24 pb-20 px-4">
+    <div class="max-w-6xl mx-auto">
+      <div class="text-center mb-12">
+        <h1 class="text-4xl md:text-5xl font-serif font-bold text-slate-800 mb-4">Events & Poojas</h1>
+        <p class="text-slate-600 text-lg max-w-2xl mx-auto">
+          Join us for special celebrations, poojas, and cultural events throughout the year. 
+          Click on any event to view the full flyer with detailed information.
+        </p>
+      </div>
+
+      <!-- EVENT CARDS GRID -->
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        {events.map((event) => (
+          <EventCard event={event} />
+        ))}
+      </div>
+
+      {events.length === 0 && (
+        <div class="text-center py-20">
+          <p class="text-slate-600 text-lg">No events currently scheduled. Please check back soon!</p>
+        </div>
+      )}
+    </div>
+  </div>
+
+  <!-- LIGHTBOX MODAL FOR FLYERS -->
+  <FlyerModal />
+
+  <!-- FOOTER -->
+  <Footer />
+</Layout>

@@ -1,16 +1,69 @@
 ---
+import Layout from '../layouts/Layout.astro';
+import Header from '../components/Header.astro';
+import InfoStrip from '../components/InfoStrip.astro';
+import EventCard from '../components/EventCard.astro';
+import FlyerModal from '../components/FlyerModal.astro';
+import Footer from '../components/Footer.astro';
+import samplePosts from '../sample-wp-posts.json';
+
+// Use sample data (will be replaced with WordPress API)
+const events = samplePosts;
 ---
 
-<html lang="en">
-	<head>
-		<meta charset="utf-8" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<link rel="icon" href="/favicon.ico" />
-		<meta name="viewport" content="width=device-width" />
-		<meta name="generator" content={Astro.generator} />
-		<title>Astro</title>
-	</head>
-	<body>
-		<h1>Astro</h1>
-	</body>
-</html>
+<Layout>
+  <Header />
+  
+  <!-- HERO SECTION WITH BACKGROUND IMAGE & FROSTED GLASS CARD -->
+  <header class="relative h-[85vh] w-full flex items-center justify-center bg-cover bg-center pt-16" style="background-image: url('https://www.sribalajitemple.com/wp-content/uploads/2021/04/temple-bg.jpg');">
+    
+    <!-- Warm Background Overlay -->
+    <div class="absolute inset-0 bg-amber-900/40"></div>
+
+    <!-- GLASSMORPHISM WELCOME CARD -->
+    <div class="relative z-10 max-w-3xl mx-4 p-8 md:p-12 rounded-2xl bg-white/90 backdrop-blur-md border border-amber-200/50 shadow-2xl text-center">
+      <p class="text-amber-600 font-semibold text-md tracking-widest uppercase">ॐ नमो वेंकटेसाय</p>
+      <!-- <span class="text-amber-500 font-semibold text-xs tracking-wide block mt-1">Om Namo Venkatesaya</span> -->
+      <h1 class="text-3xl md:text-5xl font-serif font-bold mt-2 text-slate-800 drop-shadow-md">
+        Welcome to Sri Balaji Temple
+      </h1>
+      <p class="mt-4 text-slate-700 text-base md:text-lg max-w-xl mx-auto">
+        A divine abode of worship, culture, and spiritual peace located in Bellevue, WA.
+      </p>
+      
+      <!-- ACTION BUTTONS -->
+      <div class="mt-8 flex flex-wrap justify-center gap-4">
+        <a href="#events" class="px-6 py-3 rounded-full bg-amber-500 hover:bg-amber-600 text-white font-semibold transition-all shadow-lg hover:shadow-amber-500/30">
+          Upcoming Events
+        </a>
+        <a href="/sponsor" class="px-6 py-3 rounded-full bg-amber-100 hover:bg-amber-200 text-amber-800 font-medium backdrop-blur-sm border border-amber-300 transition-all">
+          Sponsor
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <!-- QUICK INFO STRIP -->
+  <InfoStrip />
+
+  <!-- UPCOMING EVENTS SECTION -->
+  <section id="events" class="max-w-6xl mx-auto px-4 py-20">
+    <div class="text-center mb-12">
+      <h2 class="text-3xl md:text-4xl font-serif font-bold text-slate-800">Upcoming Events & Poojas</h2>
+      <p class="text-slate-600 mt-2">Click any event card to view the full flyer image.</p>
+    </div>
+
+    <!-- EVENT CARDS GRID -->
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+      {events.map((event) => (
+        <EventCard event={event} />
+      ))}
+    </div>
+  </section>
+
+  <!-- LIGHTBOX MODAL FOR FLYERS -->
+  <FlyerModal />
+
+  <!-- FOOTER -->
+  <Footer />
+</Layout>
