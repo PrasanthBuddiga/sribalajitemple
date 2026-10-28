@@ -2,9 +2,9 @@
 const currentPage = Astro.url.pathname;
 ---
 
-<header class="fixed top-0 left-0 right-0 z-40 bg-white/80 backdrop-blur-md border-b border-amber-200/50 shadow-sm">
+<header class="fixed top-0 left-0 right-0 z-40 bg-cream/90 backdrop-blur-md border-b border-maroon/20 shadow-sm">
   <nav class="max-w-6xl mx-auto px-4 py-4 flex items-center justify-between">
-    <a href="/" class="text-xl font-serif font-bold text-amber-700 hover:text-amber-600 transition-colors">
+    <a href="/" class="text-xl font-serif font-bold text-maroon hover:text-saffron transition-colors">
       Sri Balaji Temple
     </a>
     
@@ -12,7 +12,7 @@ const currentPage = Astro.url.pathname;
       <a 
         href="/" 
         class={`text-sm font-medium transition-colors ${
-          currentPage === '/' ? 'text-amber-600' : 'text-slate-700 hover:text-amber-600'
+          currentPage === '/' ? 'text-saffron' : 'text-ink hover:text-saffron'
         }`}
       >
         Home
@@ -20,7 +20,7 @@ const currentPage = Astro.url.pathname;
       <a 
         href="/about" 
         class={`text-sm font-medium transition-colors ${
-          currentPage === '/about' ? 'text-amber-600' : 'text-slate-700 hover:text-amber-600'
+          currentPage === '/about' ? 'text-saffron' : 'text-ink hover:text-saffron'
         }`}
       >
         About
@@ -28,7 +28,7 @@ const currentPage = Astro.url.pathname;
       <a 
         href="/events" 
         class={`text-sm font-medium transition-colors ${
-          currentPage === '/events' ? 'text-amber-600' : 'text-slate-700 hover:text-amber-600'
+          currentPage === '/events' ? 'text-saffron' : 'text-ink hover:text-saffron'
         }`}
       >
         Events
@@ -36,7 +36,7 @@ const currentPage = Astro.url.pathname;
       <a 
         href="/gallery" 
         class={`text-sm font-medium transition-colors ${
-          currentPage === '/gallery' ? 'text-amber-600' : 'text-slate-700 hover:text-amber-600'
+          currentPage === '/gallery' ? 'text-saffron' : 'text-ink hover:text-saffron'
         }`}
       >
         Gallery
@@ -44,7 +44,7 @@ const currentPage = Astro.url.pathname;
       <a 
         href="/priest-services" 
         class={`text-sm font-medium transition-colors ${
-          currentPage === '/priest-services' ? 'text-amber-600' : 'text-slate-700 hover:text-amber-600'
+          currentPage === '/priest-services' ? 'text-saffron' : 'text-ink hover:text-saffron'
         }`}
       >
         Services
@@ -52,7 +52,7 @@ const currentPage = Astro.url.pathname;
       <a 
         href="/sponsor" 
         class={`text-sm font-medium transition-colors ${
-          currentPage === '/sponsor' ? 'text-amber-600' : 'text-slate-700 hover:text-amber-600'
+          currentPage === '/sponsor' ? 'text-saffron' : 'text-ink hover:text-saffron'
         }`}
       >
         Sponsor
