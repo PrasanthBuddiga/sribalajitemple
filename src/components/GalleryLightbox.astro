@@ -20,25 +20,25 @@ const albumsForClient = albums.map(album => ({
 ---
 
 <!-- GALLERY LIGHTBOX MODAL -->
-<div id="galleryLightbox" class="fixed inset-0 z-50 hidden bg-slate-900/70 backdrop-blur-md flex items-center justify-center p-4" data-albums={JSON.stringify(albumsForClient)}>
-  <button onclick="closeGallery()" class="absolute top-4 right-4 z-10 w-10 h-10 rounded-full bg-slate-100 text-slate-600 hover:text-slate-800 hover:bg-slate-200 flex items-center justify-center font-bold transition-colors">
+<div id="galleryLightbox" class="fixed inset-0 z-50 hidden bg-maroon/80 backdrop-blur-md flex items-center justify-center p-4" data-albums={JSON.stringify(albumsForClient)}>
+  <button onclick="closeGallery()" class="absolute top-4 right-4 z-10 w-10 h-10 rounded-full bg-cream text-ink hover:text-maroon hover:bg-maroon/10 flex items-center justify-center font-bold transition-colors">
     ✕
   </button>
   
-  <button onclick="prevPhoto()" class="absolute left-4 z-10 w-12 h-12 rounded-full bg-white/80 text-slate-600 hover:text-slate-800 flex items-center justify-center font-bold backdrop-blur-sm hover:bg-white transition-colors shadow-md">
+  <button onclick="prevPhoto()" class="absolute left-4 z-10 w-12 h-12 rounded-full bg-white/80 text-ink hover:text-maroon flex items-center justify-center font-bold backdrop-blur-sm hover:bg-white transition-colors shadow-md">
     ←
   </button>
   
-  <button onclick="nextPhoto()" class="absolute right-4 z-10 w-12 h-12 rounded-full bg-white/80 text-slate-600 hover:text-slate-800 flex items-center justify-center font-bold backdrop-blur-sm hover:bg-white transition-colors shadow-md">
+  <button onclick="nextPhoto()" class="absolute right-4 z-10 w-12 h-12 rounded-full bg-white/80 text-ink hover:text-maroon flex items-center justify-center font-bold backdrop-blur-sm hover:bg-white transition-colors shadow-md">
     →
   </button>
   
   <div class="max-w-4xl w-full">
-    <p id="galleryAlbumTitle" class="text-center text-amber-600 text-sm font-medium mb-2"></p>
+    <p id="galleryAlbumTitle" class="text-center text-saffron text-sm font-medium mb-2"></p>
     <div class="max-h-[85vh] overflow-hidden rounded-xl">
       <img id="galleryImage" src="" alt="" class="w-full h-auto max-h-[85vh] object-contain" />
     </div>
-    <p id="galleryCounter" class="text-center text-slate-600 text-sm mt-4"></p>
+    <p id="galleryCounter" class="text-center text-ink-light text-sm mt-4"></p>
   </div>
 </div>
 

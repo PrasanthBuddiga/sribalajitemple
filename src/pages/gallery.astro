@@ -76,15 +76,15 @@ const videos = [
   <div class="pt-24 pb-20 px-4">
     <div class="max-w-6xl mx-auto">
       <div class="text-center mb-12">
-        <h1 class="text-4xl md:text-5xl font-serif font-bold text-slate-800 mb-4">Photo & Video Gallery</h1>
-        <p class="text-slate-600 text-lg max-w-2xl mx-auto">
+        <h1 class="text-4xl md:text-5xl font-serif font-bold text-ink mb-4">Photo & Video Gallery</h1>
+        <p class="text-ink-light text-lg max-w-2xl mx-auto">
           Explore our collection of memorable moments from temple festivals, celebrations, and cultural events.
         </p>
       </div>
 
       <!-- PHOTO GALLERY SECTION -->
       <section class="mb-20">
-        <h2 class="text-2xl font-serif font-bold text-slate-800 mb-8">Photo Albums</h2>
+        <h2 class="text-2xl font-serif font-bold text-ink mb-8">Photo Albums</h2>
         <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
           {galleryAlbums.map((album) => (
             <GalleryAlbum title={album.title} photos={album.photos} />
@@ -94,10 +94,10 @@ const videos = [
 
       <!-- VIDEO GALLERY SECTION -->
       <section>
-        <h2 class="text-2xl font-serif font-bold text-slate-800 mb-8">Video Gallery</h2>
+        <h2 class="text-2xl font-serif font-bold text-ink mb-8">Video Gallery</h2>
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {videos.map((video) => (
-            <div class="rounded-2xl bg-white/80 border border-amber-200/50 overflow-hidden shadow-lg">
+            <div class="rounded-2xl bg-white/80 border border-maroon/20 overflow-hidden shadow-lg">
               <div class="aspect-video">
                 <iframe
                   src={`https://www.youtube.com/embed/${video.youtubeId}`}
@@ -109,8 +109,8 @@ const videos = [
                 ></iframe>
               </div>
               <div class="p-6">
-                <h3 class="text-lg font-bold text-slate-800 mb-2">{video.title}</h3>
-                <p class="text-slate-600 text-sm">{video.description}</p>
+                <h3 class="text-lg font-bold text-ink mb-2">{video.title}</h3>
+                <p class="text-ink-light text-sm">{video.description}</p>
               </div>
             </div>
           ))}
