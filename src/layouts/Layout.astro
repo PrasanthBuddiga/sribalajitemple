@@ -17,5 +17,32 @@ const { title = 'Sri Balaji Temple | Bellevue, WA' } = Astro.props;
 </head>
 <body class="bg-cream text-ink min-h-screen font-sans antialiased selection:bg-saffron selection:text-white">
   <slot />
+  
+  <!-- Back to Top Button (Mobile) -->
+  <button 
+    id="back-to-top"
+    onclick="window.scrollTo({ top: 0, behavior: 'smooth' })"
+    class="fixed bottom-6 right-6 z-40 p-3 rounded-full bg-saffron hover:bg-maroon text-white shadow-lg transition-all opacity-0 invisible"
+    aria-label="Back to top"
+  >
+    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 10l7-7m0 0l7 7m-7-7v18" />
+    </svg>
+  </button>
+
+  <script is:inline>
+    // Show/hide back to top button based on scroll position
+    const backToTopButton = document.getElementById('back-to-top');
+    
+    window.addEventListener('scroll', () => {
+      if (window.scrollY > 300) {
+        backToTopButton.classList.remove('opacity-0', 'invisible');
+        backToTopButton.classList.add('opacity-100', 'visible');
+      } else {
+        backToTopButton.classList.add('opacity-0', 'invisible');
+        backToTopButton.classList.remove('opacity-100', 'visible');
+      }
+    });
+  </script>
 </body>
 </html>

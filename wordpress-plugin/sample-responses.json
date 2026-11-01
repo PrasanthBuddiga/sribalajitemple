@@ -1,0 +1,145 @@
+{
+  "events": [
+    {
+      "id": 123,
+      "title": "Sri Venkateswara Swamy Abhishekam",
+      "description": "<p>Join us for the sacred Abhishekam ceremony. This ritual involves bathing the deity with holy substances including milk, honey, ghee, and sacred water while chanting Vedic mantras. The ceremony brings blessings of prosperity and peace to all participants.</p>",
+      "event_date": "2024-11-14",
+      "time": "10:00 AM",
+      "location": "Sri Balaji Temple, 12501 Bel-Red Rd, Bellevue, WA 98005",
+      "image_url": "https://example.com/wp-content/uploads/2024/11/abhishekam.jpg",
+      "registration_link": "https://form.jotform.com/243641479186163"
+    },
+    {
+      "id": 124,
+      "title": "Dolotsavam Festival",
+      "description": "<p>Celebrate the divine Dolotsavam festival with special poojas and cultural programs. The festival includes the ceremonial swing of the deity, music performances, and community feasts.</p>",
+      "event_date": "2024-11-21",
+      "time": "6:00 PM",
+      "location": "Sri Balaji Temple, 12501 Bel-Red Rd, Bellevue, WA 98005",
+      "image_url": "https://example.com/wp-content/uploads/2024/11/dolotsavam.jpg",
+      "registration_link": "https://form.jotform.com/243641479186163"
+    },
+    {
+      "id": 125,
+      "title": "Sahasranama Archana",
+      "description": "<p>Participate in the recitation of Sri Venkateswara Sahasranama (1008 names of Lord Balaji). This powerful chanting brings spiritual benefits and divine blessings.</p>",
+      "event_date": "2024-11-28",
+      "time": "7:00 PM",
+      "location": "Sri Balaji Temple, 12501 Bel-Red Rd, Bellevue, WA 98005",
+      "image_url": "https://example.com/wp-content/uploads/2024/11/sahasranama.jpg",
+      "registration_link": "https://form.jotform.com/243641479186163"
+    }
+  ],
+  "sponsors": [
+    {
+      "id": 201,
+      "sponsor_name": "ABC Corporation",
+      "tier": "Platinum",
+      "logo_url": "https://example.com/wp-content/uploads/2024/11/abc-logo.png",
+      "website_url": "https://abc-corp.com"
+    },
+    {
+      "id": 202,
+      "sponsor_name": "XYZ Foundation",
+      "tier": "Platinum",
+      "logo_url": "https://example.com/wp-content/uploads/2024/11/xyz-logo.png",
+      "website_url": "https://xyz-foundation.org"
+    },
+    {
+      "id": 203,
+      "sponsor_name": "Tech Solutions Inc",
+      "tier": "Gold",
+      "logo_url": "https://example.com/wp-content/uploads/2024/11/tech-logo.png",
+      "website_url": "https://techsolutions.com"
+    },
+    {
+      "id": 204,
+      "sponsor_name": "Pacific Foods",
+      "tier": "Gold",
+      "logo_url": "https://example.com/wp-content/uploads/2024/11/pacific-logo.png",
+      "website_url": "https://pacificfoods.com"
+    },
+    {
+      "id": 205,
+      "sponsor_name": "Local Business",
+      "tier": "Silver",
+      "logo_url": "https://example.com/wp-content/uploads/2024/11/local-logo.png",
+      "website_url": "https://local-business.com"
+    },
+    {
+      "id": 206,
+      "sponsor_name": "Community Bank",
+      "tier": "Silver",
+      "logo_url": "https://example.com/wp-content/uploads/2024/11/bank-logo.png",
+      "website_url": "https://communitybank.com"
+    }
+  ],
+  "gallery": [
+    {
+      "id": 301,
+      "title": "Deities Gallery",
+      "category": "Deities",
+      "image_urls": [
+        "https://example.com/wp-content/uploads/2024/11/deity1.jpg",
+        "https://example.com/wp-content/uploads/2024/11/deity2.jpg",
+        "https://example.com/wp-content/uploads/2024/11/deity3.jpg",
+        "https://example.com/wp-content/uploads/2024/11/deity4.jpg",
+        "https://example.com/wp-content/uploads/2024/11/deity5.jpg",
+        "https://example.com/wp-content/uploads/2024/11/deity6.jpg"
+      ],
+      "upload_date": "2024-11-01 10:00:00"
+    },
+    {
+      "id": 302,
+      "title": "Brahmotsavam 2024",
+      "category": "Festivals",
+      "image_urls": [
+        "https://example.com/wp-content/uploads/2024/11/festival1.jpg",
+        "https://example.com/wp-content/uploads/2024/11/festival2.jpg",
+        "https://example.com/wp-content/uploads/2024/11/festival3.jpg",
+        "https://example.com/wp-content/uploads/2024/11/festival4.jpg",
+        "https://example.com/wp-content/uploads/2024/11/festival5.jpg"
+      ],
+      "upload_date": "2024-11-05 14:30:00"
+    },
+    {
+      "id": 303,
+      "title": "Community Events",
+      "category": "Events",
+      "image_urls": [
+        "https://example.com/wp-content/uploads/2024/11/event1.jpg",
+        "https://example.com/wp-content/uploads/2024/11/event2.jpg",
+        "https://example.com/wp-content/uploads/2024/11/event3.jpg",
+        "https://example.com/wp-content/uploads/2024/11/event4.jpg"
+      ],
+      "upload_date": "2024-11-10 09:15:00"
+    }
+  ],
+  "videos": [
+    {
+      "id": 401,
+      "title": "Sri Balaji Temple - Grand Opening",
+      "description": "Watch the grand opening ceremony of Sri Balaji Temple in Bellevue, WA.",
+      "youtube_url": "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
+      "thumbnail_url": "https://example.com/wp-content/uploads/2024/11/video-thumb1.jpg",
+      "upload_date": "2024-11-01 10:00:00"
+    },
+    {
+      "id": 402,
+      "title": "Diwali Celebration 2024",
+      "description": "Highlights from our Diwali festival celebrations with cultural programs.",
+      "youtube_url": "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
+      "thumbnail_url": "https://example.com/wp-content/uploads/2024/11/video-thumb2.jpg",
+      "upload_date": "2024-11-05 14:30:00"
+    },
+    {
+      "id": 403,
+      "title": "Daily Temple Pooja",
+      "description": "Experience the daily pooja rituals and spiritual atmosphere at the temple.",
+      "youtube_url": "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
+      "thumbnail_url": "https://example.com/wp-content/uploads/2024/11/video-thumb3.jpg",
+      "upload_date": "2024-11-10 09:15:00"
+    }
+  ]
+}

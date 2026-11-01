@@ -1,0 +1,157 @@
+---
+interface PanchangData {
+  date: string;
+  samvatsara: string;
+  ayana: string;
+  ruthu: string;
+  masa: string;
+  paksha: string;
+  tithi: string;
+  vasara: string;
+  nakshatra: string;
+  yoga: string;
+}
+
+const now = new Date();
+const formattedDate = now.toLocaleDateString('en-US', {
+  weekday: 'long',
+  year: 'numeric',
+  month: 'long',
+  day: 'numeric'
+});
+
+// The precise 60-year Samvatsara cycle array
+const samvatsaras = [
+  "Prabhava", "Vibhava", "Shukla", "Pramodoota", "Prajotpati", "Angiras", "Shrimukha", "Bhava", "Yuva", "Dhatri",
+  "Ishvara", "Bahudhanya", "Pramati", "Vikrama", "Vishu", "Chitrabhanu", "Subhanu", "Tarana", "Parthiva", "Vyaya",
+  "Sarvajit", "Sarvadhari", "Virodhi", "Vikriti", "Khara", "Nandana", "Vijaya", "Jaya", "Manmatha", "Durmukha",
+  "Hemalamba", "Vilamba", "Vikari", "Sharvari", "Plava", "Subhakrit", "Shobhakrit", "Krodhi", "Vishvavasu", "Parabhava",
+  "Plavanga", "Kilaka", "Saumya", "Sadharana", "Virodhikrita", "Paridhavi", "Pramadi", "Ananda", "Rakshasa", "Nala",
+  "Pingala", "Kalayukta", "Siddharthin", "Raudra", "Durmati", "Dundubhi", "Rudhirodgari", "Raktakshi", "Krodhana", "Kshaya"
+];
+
+const getSamvatsaraName = (vikramYear: number = 2083) => {
+  const index = (vikramYear - 2044) % 60;
+  return samvatsaras[(index + 60) % 60];
+};
+
+const getDerivedAstronomy = (monthNum: number) => {
+  const ayana = (monthNum >= 1 && monthNum <= 6) ? 'Uttarayana' : 'Dakshinayana';
+  const ruthus = ['Shishira', 'Vasanta', 'Grishma', 'Varsha', 'Sharad', 'Hemanta'];
+  const ruthuIndex = Math.floor((monthNum - 1) / 2) % 6;
+  return { ayana, ruthu: ruthus[ruthuIndex] || 'Sharad' };
+};
+
+// Traditional Sanskrit weekday mapping dictionary
+const weekdayMap: Record<string, string> = {
+  'Sunday': 'Ravivara',
+  'Monday': 'Somavara',
+  'Tuesday': 'Mangalavara',
+  'Wednesday': 'Budhavara',
+  'Thursday': 'Guruvara',
+  'Friday': 'Shukravara',
+  'Saturday': 'Shanivara'
+};
+
+const getFallbackPanchang = (): PanchangData => {
+  const month = now.getMonth() + 1;
+  const day = now.getDate();
+  const dayOfWeekName = now.toLocaleDateString('en-US', { weekday: 'long' });
+  const derived = getDerivedAstronomy(month);
+  const traditionalVasara = weekdayMap[dayOfWeekName] || 'Budhavara';
+
+  return {
+    date: formattedDate,
+    samvatsara: `${getSamvatsaraName(2083)} nama samvatsare`,
+    ayana: `${derived.ayana}ane`,
+    ruthu: `${derived.ruthu} ruthou`,
+    masa: 'Ashwin mase',
+    paksha: day <= 15 ? 'Shukla pakshe' : 'Krishna pakshe',
+    tithi: 'Tritiya tithou',
+    vasara: `${traditionalVasara} vasare`,
+    nakshatra: 'Rohini nakshatre',
+    yoga: 'Variyan yoge'
+  };
+};
+
+let panchang: PanchangData = getFallbackPanchang();
+const apiKey = import.meta.env.PANCHANG_API_KEY;
+
+if (apiKey) {
+  try {
+    const year = now.getFullYear();
+    const month = now.getMonth() + 1;
+    const day = now.getDate();
+
+    const response = await fetch('https://api.freeastroapi.com/api/v2/vedic/panchang', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'x-api-key': apiKey
+      },
+      body: JSON.stringify({
+        year,
+        month,
+        day,
+        hour: 6,
+        minute: 0,
+        lat: 47.6101,
+        lng: -122.2015,
+        tz_str: 'America/Los_Angeles'
+      })
+    });
+
+    if (response.ok) {
+      const data = await response.json();
+      if (data && data.tithi) {
+        const derived = getDerivedAstronomy(month);
+        const vikramYear = data.lunar_month?.vikram_samvat || 2083;
+        const computedSamvatsara = getSamvatsaraName(vikramYear);
+        
+        const rawWeekday = data.weekday?.name || 'Wednesday';
+        const traditionalVasara = weekdayMap[rawWeekday] || 'Budhavara';
+        
+        panchang = {
+          date: formattedDate,
+          samvatsara: `${computedSamvatsara} nama samvatsare`,
+          ayana: `${data.ayana || derived.ayana}ane`,
+          ruthu: `${data.ritu || derived.ruthu} ruthou`,
+          masa: `${data.lunar_month?.name || 'Ashwin'} mase`,
+          paksha: `${data.tithi?.paksha || 'Krishna'} pakshe`,
+          tithi: `${data.tithi?.name || 'Tritiya'} tithou`,
+          vasara: `${traditionalVasara} vasare`,
+          nakshatra: `${data.nakshatra?.name || 'Rohini'} nakshatre`,
+          yoga: `${data.yoga?.name || 'Variyan'} yoge`
+        };
+      }
+    }
+  } catch (error) {
+    console.warn('[SankalpamCard] Fetch error, using fallback:', error);
+  }
+}
+---
+
+<div class="p-6 rounded-xl bg-white/80 backdrop-blur-lg border border-maroon/20 border-t-4 border-saffron shadow-lg h-full flex flex-col min-h-[220px]">
+  <h3 class="text-saffron font-semibold text-lg mb-3 pb-3 border-b border-maroon/10">📿 Today's Sankalpam</h3>
+  
+  <!-- Date Subtitle -->
+  <div class="text-center text-xs font-medium text-slate-500 mb-3">
+    {panchang.date}
+  </div>
+
+  <!-- Ritual Prose Flow -->
+  <div class="text-xs text-slate-700 leading-relaxed text-center space-y-1.5 font-serif flex-grow">
+    <p class="font-medium"><span class="font-bold text-amber-900">{panchang.samvatsara.split(' ')[0]}</span> nama samvatsare - {panchang.ayana}</p>
+    <p class="font-medium"><span class="font-bold text-amber-900">{panchang.ruthu.split(' ')[0]}</span> ruthou - <span class="font-bold text-amber-900">{panchang.masa.split(' ')[0]}</span> mase</p>
+    <p class="font-medium"><span class="font-bold text-amber-900">{panchang.paksha.split(' ')[0]}</span> pakshe - <span class="font-bold text-amber-900">{panchang.tithi.split(' ')[0]}</span> tithou</p>
+    <p class="font-medium"><span class="font-bold text-amber-900">{panchang.vasara.split(' ')[0]}</span> vasare - <span class="font-bold text-amber-900">{panchang.nakshatra.split(' ')[0]}</span> nakshatre</p>
+    <p class="font-medium"><span class="font-bold text-amber-900">{panchang.yoga.split(' ')[0]}</span> yoge</p>
+  </div>
+
+  <!-- Footer Location Note -->
+  <div class="mt-4 pt-3 border-t border-slate-200 text-center">
+    <p class="text-[11px] text-slate-400 italic">
+      For Bellevue, WA (America/Los_Angeles)
+    </p>
+  </div>
+</div>  
