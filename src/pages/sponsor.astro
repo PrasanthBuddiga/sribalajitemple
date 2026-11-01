@@ -4,10 +4,25 @@ import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
 ---
 
+<script is:inline>
+  function openForm() {
+    document.getElementById('jotform-modal').classList.remove('hidden');
+    document.body.style.overflow = 'hidden';
+  }
+
+  function closeForm() {
+    document.getElementById('jotform-modal').classList.add('hidden');
+    document.body.style.overflow = '';
+  }
+
+  window.openForm = openForm;
+  window.closeForm = closeForm;
+</script>
+
 <Layout title="Sponsorship | Sri Balaji Temple">
   <Header />
   
-  <div class="pt-24 pb-20 px-4">
+  <div class="pt-20 md:pt-24 pb-16 md:pb-20 px-4">
     <div class="max-w-4xl mx-auto">
       <div class="text-center mb-12">
         <h1 class="text-4xl md:text-5xl font-serif font-bold text-ink mb-4">Support Sri Balaji Temple</h1>
@@ -16,117 +31,150 @@ import Footer from '../components/Footer.astro';
         </p>
       </div>
 
-      <!-- Sponsorship Tiers -->
+      <!-- Sponsorship Options -->
       <section class="mb-16">
         <h2 class="text-2xl font-serif font-bold text-ink mb-8 text-center">Sponsorship Opportunities</h2>
         
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-          <!-- Bronze Tier -->
-          <div class="rounded-2xl bg-white/80 border border-maroon/20 p-6 shadow-lg text-center">
-            <div class="w-16 h-16 rounded-full bg-[#8B4513] mx-auto mb-4 flex items-center justify-center">
-              <span class="text-2xl">🥉</span>
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          <!-- Samoohika Lakshmi Pooja -->
+          <div class="rounded-2xl bg-white/80 border border-maroon/20 p-6 shadow-lg h-full flex flex-col">
+            <div class="w-16 h-16 rounded-full bg-gradient-to-br from-amber-400 to-rose-600 mx-auto mb-4 flex items-center justify-center">
+              <span class="text-2xl">🪔</span>
             </div>
-            <h3 class="text-xl font-bold text-ink mb-2">Bronze Sponsor</h3>
-            <p class="text-[#8B4513] font-semibold text-2xl mb-4">$500</p>
-            <ul class="text-ink-light text-sm space-y-2 mb-6">
-              <li>✓ Name on website</li>
-              <li>✓ Tax deduction receipt</li>
-              <li>✓ Invitations to major events</li>
-            </ul>
-            <a href="https://www.sribalajitemple.com/sponsor/" target="_blank" rel="noopener noreferrer" class="inline-block w-full py-3 rounded-lg bg-[#8B4513] hover:bg-[#6B3503] text-white font-medium transition-colors">
-              Become a Sponsor
-            </a>
+            <h3 class="text-xl font-bold text-ink mb-2 text-center">Samoohika Lakshmi Pooja</h3>
+            <p class="text-saffron font-semibold text-2xl mb-4 text-center">$51</p>
+            <p class="text-ink-light text-sm mb-4 flex-grow">
+              Collective prayer ceremony dedicated to Goddess Mahalakshmi for wealth, prosperity, abundance, and well-being. Devotees gather to offer prayers, chant sacred hymns, and seek blessings.
+            </p>
+            <button onclick="openForm()" class="inline-block w-full py-3 rounded-lg bg-saffron hover:bg-maroon text-white font-medium transition-colors text-center mt-auto cursor-pointer">
+              Sponsor Now
+            </button>
           </div>
 
-          <!-- Silver Tier -->
-          <div class="rounded-2xl bg-white/80 border border-maroon/30 p-6 shadow-lg text-center transform md:scale-105">
-            <div class="w-16 h-16 rounded-full bg-[#71797E] mx-auto mb-4 flex items-center justify-center">
-              <span class="text-2xl">🥈</span>
+          <!-- Dolotsavam One Day -->
+          <div class="rounded-2xl bg-white/80 border border-maroon/20 p-6 shadow-lg h-full flex flex-col">
+            <div class="w-16 h-16 rounded-full bg-gradient-to-br from-amber-400 to-rose-600 mx-auto mb-4 flex items-center justify-center">
+              <span class="text-2xl">🛕</span>
             </div>
-            <h3 class="text-xl font-bold text-ink mb-2">Silver Sponsor</h3>
-            <p class="text-[#71797E] font-semibold text-2xl mb-4">$1,000</p>
-            <ul class="text-ink-light text-sm space-y-2 mb-6">
-              <li>✓ All Bronze benefits</li>
-              <li>✓ Name on temple display</li>
-              <li>✓ Special pooja sponsorship</li>
-              <li>✓ Family photo with deity</li>
-            </ul>
-            <a href="https://www.sribalajitemple.com/sponsor/" target="_blank" rel="noopener noreferrer" class="inline-block w-full py-3 rounded-lg bg-[#71797E] hover:bg-[#5A6368] text-white font-medium transition-colors">
-              Become a Sponsor
-            </a>
+            <h3 class="text-xl font-bold text-ink mb-2 text-center">Dolotsavam (One Day)</h3>
+            <p class="text-saffron font-semibold text-2xl mb-4 text-center">$51</p>
+            <p class="text-ink-light text-sm mb-4 flex-grow">
+              Divine Swing Festival of Lord Sri Venkateswara. Lord is ceremoniously seated on a decorated swing amidst Vedic chants and devotional music.
+            </p>
+            <button onclick="openForm()" class="inline-block w-full py-3 rounded-lg bg-saffron hover:bg-maroon text-white font-medium transition-colors text-center mt-auto cursor-pointer">
+              Sponsor Now
+            </button>
           </div>
 
-          <!-- Gold Tier -->
-          <div class="rounded-2xl bg-white/80 border border-maroon/40 p-6 shadow-lg text-center">
-            <div class="w-16 h-16 rounded-full bg-[#D4AF37] mx-auto mb-4 flex items-center justify-center">
-              <span class="text-2xl">🥇</span>
+          <!-- Dolotsavam All Days -->
+          <div class="rounded-2xl bg-white/80 border border-maroon/20 p-6 shadow-lg h-full flex flex-col">
+            <div class="w-16 h-16 rounded-full bg-gradient-to-br from-amber-400 to-rose-600 mx-auto mb-4 flex items-center justify-center">
+              <span class="text-2xl">🛕</span>
             </div>
-            <h3 class="text-xl font-bold text-ink mb-2">Gold Sponsor</h3>
-            <p class="text-[#D4AF37] font-semibold text-2xl mb-4">$2,500+</p>
-            <ul class="text-ink-light text-sm space-y-2 mb-6">
-              <li>✓ All Silver benefits</li>
-              <li>✓ Annual sponsorship plaque</li>
-              <li>✓ VIP seating at events</li>
-              <li>✓ Private temple tour</li>
-              <li>✓ Annual family archana</li>
-            </ul>
-            <a href="https://www.sribalajitemple.com/sponsor/" target="_blank" rel="noopener noreferrer" class="inline-block w-full py-3 rounded-lg bg-[#D4AF37] hover:bg-[#B8941F] text-white font-medium transition-colors">
-              Become a Sponsor
-            </a>
+            <h3 class="text-xl font-bold text-ink mb-2 text-center">Dolotsavam (All Days)</h3>
+            <p class="text-saffron font-semibold text-2xl mb-4 text-center">$201</p>
+            <p class="text-ink-light text-sm mb-4 flex-grow">
+              Sponsor all four days of the Divine Swing Festival. Experience the complete spiritual journey with Lord Sri Venkateswara.
+            </p>
+            <button onclick="openForm()" class="inline-block w-full py-3 rounded-lg bg-saffron hover:bg-maroon text-white font-medium transition-colors text-center mt-auto cursor-pointer">
+              Sponsor Now
+            </button>
+          </div>
+
+          <!-- Daily Feast Sponsor (Annadanam) -->
+          <div class="rounded-2xl bg-white/80 border border-maroon/20 p-6 shadow-lg h-full flex flex-col">
+            <div class="w-16 h-16 rounded-full bg-gradient-to-br from-amber-400 to-rose-600 mx-auto mb-4 flex items-center justify-center">
+              <span class="text-2xl">🍲</span>
+            </div>
+            <h3 class="text-xl font-bold text-ink mb-2 text-center">Daily Feast Sponsor (Annadanam)</h3>
+            <p class="text-saffron font-semibold text-2xl mb-4 text-center">$251</p>
+            <p class="text-ink-light text-sm mb-4 flex-grow">
+              Support the community through the sacred service of Annadanam. Your contribution helps provide delicious prasadam and meals to devotees attending the event.
+            </p>
+            <p class="text-ink-light text-xs mb-4 font-medium">🙏 One of the highest forms of seva</p>
+            <button onclick="openForm()" class="inline-block w-full py-3 rounded-lg bg-saffron hover:bg-maroon text-white font-medium transition-colors text-center mt-auto cursor-pointer">
+              Sponsor Now
+            </button>
+          </div>
+
+          <!-- Abhishekam -->
+          <div class="rounded-2xl bg-white/80 border border-maroon/20 p-6 shadow-lg h-full flex flex-col">
+            <div class="w-16 h-16 rounded-full bg-gradient-to-br from-amber-400 to-rose-600 mx-auto mb-4 flex items-center justify-center">
+              <span class="text-2xl">🪔</span>
+            </div>
+            <h3 class="text-xl font-bold text-ink mb-2 text-center">Sri Venkateswara Swamy Abhishekam</h3>
+            <p class="text-saffron font-semibold text-2xl mb-4 text-center">$108</p>
+            <p class="text-ink-light text-sm mb-4 flex-grow">
+              Experience the divine grace of Sri Venkateswara Swamy Abhishekam, a sacred ritual performed with devotion and Vedic chanting.
+            </p>
+            <button onclick="openForm()" class="inline-block w-full py-3 rounded-lg bg-saffron hover:bg-maroon text-white font-medium transition-colors text-center mt-auto cursor-pointer">
+              Sponsor Now
+            </button>
+          </div>
+
+          <!-- Archana -->
+          <div class="rounded-2xl bg-white/80 border border-maroon/20 p-6 shadow-lg h-full flex flex-col">
+            <div class="w-16 h-16 rounded-full bg-gradient-to-br from-amber-400 to-rose-600 mx-auto mb-4 flex items-center justify-center">
+              <span class="text-2xl">🌸</span>
+            </div>
+            <h3 class="text-xl font-bold text-ink mb-2 text-center">Archana</h3>
+            <p class="text-saffron font-semibold text-2xl mb-4 text-center">$25</p>
+            <p class="text-ink-light text-sm mb-4 flex-grow">
+              Sponsor daily archana (worship) in your family's name. Receive blessings for you and your loved ones.
+            </p>
+            <p class="text-ink-light text-xs mb-4 font-medium">🙏 Daily worship sponsorship</p>
+            <button onclick="openForm()" class="inline-block w-full py-3 rounded-lg bg-saffron hover:bg-maroon text-white font-medium transition-colors text-center mt-auto cursor-pointer">
+              Sponsor Now
+            </button>
           </div>
         </div>
       </section>
 
-      <!-- Other Donation Options -->
+      <!-- Additional Options -->
       <section class="mb-16">
-        <h2 class="text-2xl font-serif font-bold text-ink mb-8 text-center">Other Ways to Give</h2>
+        <h2 class="text-2xl font-serif font-bold text-ink mb-8 text-center">Additional Options</h2>
         
         <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-          <div class="rounded-2xl bg-white/80 border border-maroon/20 p-6 shadow-lg">
-            <h3 class="text-lg font-bold text-ink mb-3">🪔 Annadanam (Food Donation)</h3>
-            <p class="text-ink-light text-sm mb-4">
-              Sponsor free meals for devotees on special occasions. Your contribution helps feed the community.
+          <!-- General Donation -->
+          <div class="rounded-2xl bg-white/80 border border-maroon/20 p-6 shadow-lg h-full flex flex-col">
+            <h3 class="text-lg font-bold text-ink mb-3">💝 General Donation</h3>
+            <p class="text-ink-light text-sm mb-4 flex-grow">
+              Make a general donation of any amount to support the temple's activities and maintenance.
             </p>
-            <p class="text-saffron font-semibold mb-4">Starting at $250</p>
-            <a href="https://www.sribalajitemple.com/sponsor/" target="_blank" rel="noopener noreferrer" class="inline-block px-6 py-2 rounded-lg bg-cream hover:bg-maroon/10 text-maroon font-medium transition-colors">
-              Learn More
-            </a>
+            <p class="text-saffron font-semibold mb-4">Starting at $1</p>
+            <button onclick="openForm()" class="inline-block w-full py-3 rounded-lg bg-cream hover:bg-maroon/10 text-maroon font-medium transition-colors text-center mt-auto cursor-pointer">
+              Donate Now
+            </button>
           </div>
 
-          <div class="rounded-2xl bg-white/80 border border-maroon/20 p-6 shadow-lg">
-            <h3 class="text-lg font-bold text-ink mb-3">🌸 Archana Sponsorship</h3>
-            <p class="text-ink-light text-sm mb-4">
-              Sponsor daily archana (worship) in your family's name. Blessings for you and your loved ones.
+          <!-- Silver Coin Sahasranama Mala -->
+          <div class="rounded-2xl bg-white/80 border border-maroon/20 p-6 shadow-lg h-full flex flex-col">
+            <h3 class="text-lg font-bold text-ink mb-3">🪙 Lord Balaji Silver Coin Sahasranama Mala</h3>
+            <p class="text-ink-light text-sm mb-4 flex-grow">
+              Receive a sacred silver coin with Sahasranama Mala. A blessed item for your home shrine.
             </p>
-            <p class="text-saffron font-semibold mb-4">Starting at $100</p>
-            <a href="https://www.sribalajitemple.com/sponsor/" target="_blank" rel="noopener noreferrer" class="inline-block px-6 py-2 rounded-lg bg-cream hover:bg-maroon/10 text-maroon font-medium transition-colors">
-              Learn More
-            </a>
-          </div>
-
-          <div class="rounded-2xl bg-white/80 border border-maroon/20 p-6 shadow-lg">
-            <h3 class="text-lg font-bold text-ink mb-3">🎉 Event Sponsorship</h3>
-            <p class="text-ink-light text-sm mb-4">
-              Sponsor major festivals and cultural events. Your support makes our celebrations possible.
-            </p>
-            <p class="text-saffron font-semibold mb-4">Custom amount</p>
-            <a href="https://www.sribalajitemple.com/sponsor/" target="_blank" rel="noopener noreferrer" class="inline-block px-6 py-2 rounded-lg bg-cream hover:bg-maroon/10 text-maroon font-medium transition-colors">
-              Learn More
-            </a>
-          </div>
-
-          <div class="rounded-2xl bg-white/80 border border-maroon/20 p-6 shadow-lg">
-            <h3 class="text-lg font-bold text-ink mb-3">🏛️ Temple Maintenance</h3>
-            <p class="text-ink-light text-sm mb-4">
-              Contribute to temple maintenance, renovations, and infrastructure improvements.
-            </p>
-            <p class="text-saffron font-semibold mb-4">Any amount</p>
-            <a href="https://www.sribalajitemple.com/sponsor/" target="_blank" rel="noopener noreferrer" class="inline-block px-6 py-2 rounded-lg bg-cream hover:bg-maroon/10 text-maroon font-medium transition-colors">
-              Learn More
-            </a>
+            <p class="text-saffron font-semibold mb-4">$51 per coin (up to 100 coins)</p>
+            <button onclick="openForm()" class="inline-block w-full py-3 rounded-lg bg-cream hover:bg-maroon/10 text-maroon font-medium transition-colors text-center mt-auto cursor-pointer">
+              Order Now
+            </button>
           </div>
         </div>
       </section>
+
+      <!-- JotForm Modal -->
+      <div id="jotform-modal" class="hidden fixed inset-0 z-50 flex items-center justify-center p-0 md:p-4 bg-black/50 backdrop-blur-sm">
+        <div class="bg-white md:rounded-2xl shadow-2xl max-w-4xl w-full h-full md:max-h-[90vh] overflow-hidden flex flex-col">
+          <div class="flex items-center justify-between p-4 border-b border-maroon/20">
+            <h3 class="text-lg md:text-xl font-bold text-ink">Complete Your Sponsorship</h3>
+            <button onclick="closeForm()" class="text-ink-light hover:text-maroon transition-colors text-2xl font-bold cursor-pointer">
+              ✕
+            </button>
+          </div>
+          <div class="flex-1 overflow-auto p-0 md:p-4">
+            <script type="text/javascript" src="https://form.jotform.com/jsform/243641479186163" async></script>
+          </div>
+        </div>
+      </div>
 
       <!-- Contact Section -->
       <section class="bg-cream rounded-2xl p-8 border border-maroon/20">

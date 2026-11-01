@@ -4,16 +4,29 @@ import Header from '../components/Header.astro';
 import EventCard from '../components/EventCard.astro';
 import FlyerModal from '../components/FlyerModal.astro';
 import Footer from '../components/Footer.astro';
-import samplePosts from '../sample-wp-posts.json';
+import type { TempleEvent } from '../types/events';
 
-// Use sample data (will be replaced with WordPress API)
-const events = samplePosts;
+// Fetch events from WordPress API
+const WORDPRESS_API_URL = 'https://sribalajitemple.org';
+let events: TempleEvent[] = [];
+let error: string | null = null;
+
+try {
+  const response = await fetch(`${WORDPRESS_API_URL}/wp-json/sribalaji/v1/events`);
+  if (!response.ok) {
+    throw new Error(`HTTP error! status: ${response.status}`);
+  }
+  events = await response.json();
+} catch (e) {
+  error = e instanceof Error ? e.message : 'Unknown error occurred';
+  console.error('Failed to fetch events:', e);
+}
 ---
 
 <Layout title="Events & Poojas | Sri Balaji Temple">
   <Header />
   
-  <div class="pt-24 pb-20 px-4">
+  <div class="pt-20 md:pt-24 pb-16 md:pb-20 px-4">
     <div class="max-w-6xl mx-auto">
       <div class="text-center mb-12">
         <h1 class="text-4xl md:text-5xl font-serif font-bold text-ink mb-4">Events & Poojas</h1>
@@ -24,15 +37,21 @@ const events = samplePosts;
       </div>
 
       <!-- EVENT CARDS GRID -->
-      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-        {events.map((event) => (
-          <EventCard event={event} />
-        ))}
-      </div>
-
-      {events.length === 0 && (
+      {error ? (
+        <div class="text-center py-20 bg-red-50 border border-red-200 rounded-2xl">
+          <p class="text-red-600 text-lg mb-2">Unable to load events from the temple website.</p>
+          <p class="text-red-500 text-sm">Error: {error}</p>
+          <p class="text-ink-light text-sm mt-4">Please try again later or contact the temple administrator.</p>
+        </div>
+      ) : events.length === 0 ? (
         <div class="text-center py-20">
           <p class="text-ink-light text-lg">No events currently scheduled. Please check back soon!</p>
+        </div>
+      ) : (
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          {events.map((event) => (
+            <EventCard event={event} />
+          ))}
         </div>
       )}
     </div>
