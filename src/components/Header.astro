@@ -61,6 +61,14 @@ const currentPage = Astro.url.pathname;
         Gallery
       </a>
       <a 
+        href="/stotras" 
+        class={`text-sm font-medium transition-colors ${
+          currentPage === '/stotras' ? 'text-saffron' : 'text-ink hover:text-saffron'
+        }`}
+      >
+        Stotras
+      </a>
+      <a 
         href="/priest-services" 
         class={`text-sm font-medium transition-colors ${
           currentPage === '/priest-services' ? 'text-saffron' : 'text-ink hover:text-saffron'
@@ -155,6 +163,17 @@ const currentPage = Astro.url.pathname;
             }`}
           >
             Gallery
+          </a>
+          <a 
+            href="/stotras" 
+            onclick="closeMobileMenu()"
+            class={`block px-4 py-4 rounded-lg font-medium transition-colors ${
+              currentPage === '/stotras' 
+                ? 'bg-saffron text-white' 
+                : 'bg-white/50 text-ink hover:bg-maroon/10'
+            }`}
+          >
+            Stotras
           </a>
           <a 
             href="/priest-services" 

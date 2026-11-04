@@ -11,28 +11,61 @@ interface Props {
 
 const { title, photos } = Astro.props;
 const escapedTitle = title.replace(/'/g, "\\'");
+
+// Show 4 photos in 2x2 grid, with overlay on 4th showing remaining count
+const previewLimit = 4;
+const previewPhotos = photos.slice(0, previewLimit);
+const remainingCount = Math.max(0, photos.length - 3); // total - 3
+const showOverlay = photos.length > 3;
 ---
 
-<div class="rounded-2xl bg-white/80 border border-maroon/20 overflow-hidden shadow-lg flex flex-col h-full">
-  <div class="p-4 md:p-6 border-b border-maroon/20">
-    <h3 class="text-lg md:text-xl font-bold text-ink">{title}</h3>
+<div class="rounded-2xl bg-white/80 border border-maroon/20 overflow-hidden shadow-lg flex flex-col cursor-pointer group max-w-md" onclick={`openGallery(0, '${escapedTitle}')`}>
+  <div class="p-3 md:p-4 border-b border-maroon/20">
+    <h3 class="text-base md:text-lg font-bold text-ink">{title}</h3>
   </div>
-  
-  <div class="p-3 md:p-4 grid grid-cols-2 md:grid-cols-3 gap-2 md:gap-3 flex-1">
-    {photos.map((photo, index) => (
-      <div 
-        class="relative aspect-square overflow-hidden rounded-lg cursor-pointer group"
-        onclick={`openGallery(${index}, '${escapedTitle}')`}
-      >
-        <img 
-          src={photo.url} 
-          alt={photo.alt} 
-          class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" 
-        />
-        <div class="absolute inset-0 bg-maroon/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
-          <span class="text-white text-xs font-semibold">View</span>
-        </div>
+
+  <div class="flex-1 p-2 md:p-3">
+    <div class="grid grid-cols-2 gap-1.5 md:gap-2">
+      <!-- Photo 1 -->
+      <div class="relative aspect-square overflow-hidden rounded-md">
+        {previewPhotos[0] ? (
+          <img src={previewPhotos[0].url} alt={previewPhotos[0].alt} class="w-full h-full object-cover" />
+        ) : (
+          <div class="w-full h-full bg-maroon/10"></div>
+        )}
       </div>
-    ))}
+
+      <!-- Photo 2 -->
+      <div class="relative aspect-square overflow-hidden rounded-md">
+        {previewPhotos[1] ? (
+          <img src={previewPhotos[1].url} alt={previewPhotos[1].alt} class="w-full h-full object-cover" />
+        ) : (
+          <div class="w-full h-full bg-maroon/10"></div>
+        )}
+      </div>
+
+      <!-- Photo 3 -->
+      <div class="relative aspect-square overflow-hidden rounded-md">
+        {previewPhotos[2] ? (
+          <img src={previewPhotos[2].url} alt={previewPhotos[2].alt} class="w-full h-full object-cover" />
+        ) : (
+          <div class="w-full h-full bg-maroon/10"></div>
+        )}
+      </div>
+
+      <!-- Photo 4 with overlay -->
+      <div class="relative aspect-square overflow-hidden rounded-md">
+        {previewPhotos[3] ? (
+          <img src={previewPhotos[3].url} alt={previewPhotos[3].alt} class="w-full h-full object-cover" />
+        ) : (
+          <div class="w-full h-full bg-maroon/10"></div>
+        )}
+        {showOverlay && (
+          <div class="absolute inset-0 bg-black/60 flex items-center justify-center z-10">
+            <span class="text-white font-bold text-lg md:text-xl">+{remainingCount}</span>
+          </div>
+        )}
+      </div>
+    </div>
   </div>
 </div>
