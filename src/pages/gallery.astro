@@ -4,11 +4,11 @@ import Header from '../components/Header.astro';
 import GalleryAlbum from '../components/GalleryAlbum.astro';
 import GalleryLightbox from '../components/GalleryLightbox.astro';
 import Footer from '../components/Footer.astro';
-import type { GalleryAlbum, TempleVideo } from '../types/events';
+import type { GalleryAlbum as GalleryAlbumType, TempleVideo } from '../types/events';
 
 // Fetch gallery from WordPress API
 const WORDPRESS_API_URL = 'https://sribalajitemple.org';
-let galleryAlbums: GalleryAlbum[] = [];
+let galleryAlbums: GalleryAlbumType[] = [];
 let videos: TempleVideo[] = [];
 let error: string | null = null;
 
@@ -68,11 +68,18 @@ const videosWithMetadata = await Promise.all(videos.map(async (video) => {
   const youtubeId = getYouTubeId(video.youtube_url);
   const youtubeTitle = await getYouTubeTitle(video.youtube_url);
   
+  // Use WordPress thumbnail if available, otherwise YouTube thumbnail with fallback
+  let thumbnailUrl = video.thumbnail_url;
+  if (!thumbnailUrl) {
+    thumbnailUrl = `https://img.youtube.com/vi/${youtubeId}/hqdefault.jpg`;
+  }
+  
   return {
     ...video,
     youtubeId,
     title: youtubeTitle || video.title, // Use YouTube title if available, otherwise WordPress title
-    description: video.description // Keep WordPress description (oEmbed doesn't provide descriptions)
+    description: video.description, // Keep WordPress description (oEmbed doesn't provide descriptions)
+    thumbnailUrl
   };
 }));
 ---
@@ -104,7 +111,7 @@ const videosWithMetadata = await Promise.all(videos.map(async (video) => {
             <p class="text-ink-light text-lg">No gallery items available. Please check back soon!</p>
           </div>
         ) : (
-          <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+          <div class="flex flex-col md:flex-row gap-6 md:gap-8 justify-center">
             {albumsForComponent.map((album) => (
               <GalleryAlbum title={album.title} photos={album.photos} />
             ))}
@@ -129,19 +136,27 @@ const videosWithMetadata = await Promise.all(videos.map(async (video) => {
         ) : (
           <div class="relative">
             <!-- Carousel Container -->
-            <div id="video-carousel" class="flex gap-6 overflow-x-auto scroll-smooth snap-x snap-mandatory scrollbar-hide pb-4" style="scroll-behavior: smooth; -webkit-overflow-scrolling: touch;">
-              {videosWithMetadata.map((video) => (
-                <div class="flex-shrink-0 w-full md:w-[calc(50%-12px)] lg:w-[calc(33.333%-16px)] snap-start">
+            <div id="video-carousel" class="flex gap-6 overflow-x-auto scroll-smooth snap-x snap-mandatory scrollbar-hide pb-4" style="scroll-behavior: smooth; -webkit-overflow-scrolling: touch;" data-videos={JSON.stringify(videosWithMetadata)}>
+              {videosWithMetadata.map((video, index) => (
+                <div class="flex-shrink-0 w-[85%] md:w-[calc(50%-12px)] lg:w-[calc(33.333%-16px)] snap-start">
                   <div class="rounded-2xl bg-white/80 border border-maroon/20 overflow-hidden shadow-lg h-full flex flex-col">
-                    <div class="aspect-video">
-                      <iframe
-                        src={`https://www.youtube.com/embed/${video.youtubeId}`}
-                        title={video.title}
-                        frameborder="0"
-                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                        allowfullscreen
-                        class="w-full h-full"
-                      ></iframe>
+                    <div class="aspect-video relative group cursor-pointer overflow-hidden" onclick={`loadVideo(${index})`}>
+                      <!-- Thumbnail -->
+                      <img 
+                        src={video.thumbnailUrl} 
+                        alt={video.title} 
+                        class="w-full h-full object-cover transform scale-110"
+                      />
+                      <!-- Custom Play Button -->
+                      <div class="absolute inset-0 flex items-center justify-center bg-black/20 group-hover:bg-black/30 transition-colors">
+                        <div class="w-16 h-16 rounded-full bg-white/90 flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform">
+                          <svg viewBox="0 0 24 24" fill="currentColor" class="w-8 h-8 text-saffron ml-1">
+                            <path d="M8 5v14l11-7z"/>
+                          </svg>
+                        </div>
+                      </div>
+                      <!-- Hidden iframe container -->
+                      <div id={`video-container-${index}`} class="hidden absolute inset-0"></div>
                     </div>
                     <div class="p-6 flex-1 flex flex-col">
                       <h3 class="text-lg font-bold text-ink mb-2 line-clamp-2">{video.title}</h3>
@@ -180,6 +195,10 @@ const videosWithMetadata = await Promise.all(videos.map(async (video) => {
   <Footer />
 
   <script is:inline>
+    // Store videos data for JavaScript access
+    const carousel = document.getElementById('video-carousel');
+    const videosData = carousel ? JSON.parse(carousel.dataset.videos) : [];
+
     function scrollCarousel(direction) {
       const carousel = document.getElementById('video-carousel');
       if (!carousel) {
@@ -196,6 +215,36 @@ const videosWithMetadata = await Promise.all(videos.map(async (video) => {
       }
     }
 
+    function loadVideo(index) {
+      const container = document.getElementById(`video-container-${index}`);
+      if (!container) return;
+      
+      const video = videosData[index];
+      if (!video) return;
+      
+      // Create iframe with autoplay
+      const iframe = document.createElement('iframe');
+      iframe.src = `https://www.youtube.com/embed/${video.youtubeId}?autoplay=1&rel=0`;
+      iframe.title = video.title;
+      iframe.frameBorder = '0';
+      iframe.allow = 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture';
+      iframe.allowFullscreen = true;
+      iframe.className = 'w-full h-full';
+      
+      // Replace thumbnail with iframe
+      container.innerHTML = '';
+      container.appendChild(iframe);
+      container.classList.remove('hidden');
+      
+      // Hide the thumbnail image
+      const parent = container.parentElement;
+      const thumbnail = parent.querySelector('img');
+      const playButton = parent.querySelector('.absolute.inset-0');
+      if (thumbnail) thumbnail.classList.add('hidden');
+      if (playButton) playButton.classList.add('hidden');
+    }
+
     window.scrollCarousel = scrollCarousel;
+    window.loadVideo = loadVideo;
   </script>
 </Layout>

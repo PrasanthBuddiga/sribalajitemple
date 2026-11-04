@@ -28,16 +28,17 @@ const escapedTitle = JSON.stringify(event.title);
       <!-- Event Details -->
       <div class="mt-3 md:mt-4 space-y-1 md:space-y-2 text-xs md:text-sm text-ink-light">
         {event.event_date && (
-          <p class="flex items-center">
-            <span class="text-saffron mr-2">📅</span>
-            {new Date(event.event_date).toLocaleDateString('en-US', { 
-              weekday: 'short', 
-              year: 'numeric', 
-              month: 'short', 
-              day: 'numeric' 
-            })}
-          </p>
-        )}
+  <p class="flex items-center">
+    <span class="text-saffron mr-2">📅</span>
+    {new Date(event.event_date).toLocaleDateString('en-US', { 
+      weekday: 'short', 
+      year: 'numeric', 
+      month: 'short', 
+      day: 'numeric',
+      timeZone: 'UTC' // 🔒 Prevents timezone shifting!
+    })}
+  </p>
+)}
         {event.time && (
           <p class="flex items-center">
             <span class="text-saffron mr-2">⏰</span>

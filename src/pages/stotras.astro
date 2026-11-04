@@ -1,0 +1,372 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+
+const availableLanguages = ['sanskrit', 'transliteration', 'telugu', 'kannada', 'tamil'];
+const languageNames = {
+  sanskrit: 'Sanskrit',
+  transliteration: 'English (IAST)',
+  telugu: 'తెలుగు',
+  kannada: 'ಕನ್ನಡ',
+  tamil: 'தமிழ்'
+};
+---
+
+<Layout title="Stotras & Chants | Sri Balaji Temple">
+  <Header />
+  
+  <div class="pt-20 md:pt-24 pb-16 md:pb-20 px-4">
+    <div class="max-w-6xl mx-auto">
+      <!-- Page Header -->
+      <h1 class="text-3xl md:text-4xl font-serif font-bold text-ink mb-4 text-center">
+        📿 Stotras & Chants
+      </h1>
+      <p class="text-ink-light text-center mb-8">
+        Sacred hymns for your daily prayers and rituals
+      </p>
+
+      <!-- Search Bar -->
+      <div id="searchBar" class="max-w-xl mx-auto mb-8">
+        <input 
+          type="text" 
+          id="searchInput"
+          placeholder="Search stotras..." 
+          class="w-full px-4 py-3 rounded-xl border border-maroon/20 focus:border-saffron focus:outline-none transition-colors bg-white/80 backdrop-blur-lg"
+          oninput="filterStotras()"
+        />
+      </div>
+
+      <!-- Stotras Grid View -->
+      <div id="stotrasGridView" class="space-y-4 max-w-4xl mx-auto">
+        <div class="col-span-full text-center py-8">
+          <p class="text-ink-light">Loading stotras...</p>
+        </div>
+      </div>
+
+      <!-- Single Stotra Reader View (Hidden by default) -->
+      <div id="stotraReaderView" class="hidden">
+        <!-- Back Button -->
+        <button 
+          onclick="closeStotraReader()"
+          class="mb-6 px-4 py-2 rounded-lg border border-maroon/20 hover:bg-maroon/10 transition-colors text-sm font-medium flex items-center gap-2"
+        >
+          ← Back to All Stotras
+        </button>
+
+        <!-- Stotra Header -->
+        <div class="bg-white/80 backdrop-blur-lg border border-maroon/20 border-t-4 border-saffron rounded-2xl p-6 md:p-8 shadow-lg mb-6">
+          <h2 id="readerTitle" class="text-2xl md:text-3xl font-serif font-bold text-ink mb-2"></h2>
+          <p id="readerDescription" class="text-ink-light text-sm"></p>
+        </div>
+
+        <!-- Controls Bar -->
+        <div id="controlsBar" class="bg-white/80 backdrop-blur-lg border border-maroon/20 rounded-2xl p-4 md:p-6 shadow-lg mb-6">
+          <div class="flex flex-col md:flex-row gap-4 items-center justify-between">
+            <!-- Language Switcher -->
+            <div class="flex flex-wrap gap-2">
+              {availableLanguages.map(lang => (
+                <button
+                  id={`lang-btn-${lang}`}
+                  onclick={`changeLanguage('${lang}')`}
+                  class={`px-4 py-2 rounded-lg border border-maroon/20 transition-colors text-sm font-medium ${
+                    lang === 'sanskrit' ? 'bg-saffron text-white border-saffron' : 'bg-white hover:bg-maroon/10'
+                  }`}
+                >
+                  {languageNames[lang]}
+                </button>
+              ))}
+            </div>
+
+            <!-- Font Size Controls -->
+            <div class="flex items-center gap-2">
+              <button
+                onclick="decreaseFontSize()"
+                class="px-3 py-2 rounded-lg border border-maroon/20 hover:bg-maroon/10 transition-colors font-bold"
+                aria-label="Decrease font size"
+              >
+                A-
+              </button>
+              <button
+                onclick="increaseFontSize()"
+                class="px-3 py-2 rounded-lg border border-maroon/20 hover:bg-maroon/10 transition-colors font-bold"
+                aria-label="Increase font size"
+              >
+                A+
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Stotra Content -->
+        <div class="bg-white/80 backdrop-blur-lg border border-maroon/20 rounded-2xl p-6 md:p-8 shadow-lg">
+          <div
+            id="stotraContent"
+            class="stotra-content prose prose-lg max-w-none leading-relaxed whitespace-pre-line"
+            data-current-language="sanskrit"
+          >
+          </div>
+        </div>
+
+        <!-- Floating Controls Group -->
+        <div
+          id="floatingControls"
+          class="hidden fixed right-4 bottom-4 z-50 flex flex-col gap-2"
+        >
+          <button
+            onclick="increaseFontSize()"
+            class="w-12 h-12 rounded-full bg-saffron text-white shadow-lg hover:bg-saffron/90 transition-colors font-bold text-lg flex items-center justify-center"
+            aria-label="Increase font size"
+          >
+            A+
+          </button>
+          <button
+            onclick="decreaseFontSize()"
+            class="w-12 h-12 rounded-full bg-white border-2 border-maroon/20 shadow-lg hover:bg-maroon/10 transition-colors font-bold text-lg flex items-center justify-center"
+            aria-label="Decrease font size"
+          >
+            A-
+          </button>
+          <button
+            onclick="window.scrollTo({ top: 0, behavior: 'smooth' })"
+            class="w-12 h-12 rounded-full bg-maroon text-white shadow-lg hover:bg-maroon/90 transition-colors flex items-center justify-center"
+            aria-label="Scroll to top"
+          >
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 10l7-7m0 0l7 7m-7-7v18" />
+            </svg>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <Footer />
+
+  <script is:inline>
+    let currentStotraId = null;
+    let currentFontSize = 18;
+    let stotrasData = {};
+
+    // Show/hide floating controls based on scroll
+    function handleScroll() {
+      const floatingControls = document.getElementById('floatingControls');
+      const controlsBar = document.getElementById('controlsBar');
+      const readerView = document.getElementById('stotraReaderView');
+      const globalBackToTop = document.getElementById('back-to-top');
+
+      if (!floatingControls || !controlsBar || !readerView || readerView.classList.contains('hidden')) {
+        if (floatingControls) floatingControls.classList.add('hidden');
+        if (globalBackToTop) globalBackToTop.classList.remove('hidden');
+        return;
+      }
+
+      const controlsBarBottom = controlsBar.getBoundingClientRect().bottom;
+
+      // Show floating controls when the main controls bar is no longer visible
+      if (controlsBarBottom < 0) {
+        floatingControls.classList.remove('hidden');
+        // Hide global back-to-top button to avoid overlap
+        if (globalBackToTop) globalBackToTop.classList.add('hidden');
+      } else {
+        floatingControls.classList.add('hidden');
+        // Show global back-to-top button when not in reader view
+        if (globalBackToTop) globalBackToTop.classList.remove('hidden');
+      }
+    }
+
+    // Load stotras list from API
+   async function loadStotrasList() {
+  try {
+    const response = await fetch('/api/stotras-list');
+    const stotrasList = await response.json();
+    
+    const listView = document.getElementById('stotrasGridView');
+    listView.innerHTML = stotrasList.map((stotra) => `
+      <div 
+        class="stotra-card group flex flex-col sm:flex-row items-start sm:items-center justify-between p-5 md:p-6 rounded-2xl bg-white/90 backdrop-blur-lg border border-maroon/15 hover:border-saffron shadow-sm hover:shadow-md transition-all cursor-pointer"
+        data-stotra-id="${stotra.id}"
+        data-title="${stotra.title.toLowerCase()}"
+        onclick="openStotraReader('${stotra.id}')"
+      >
+        <div class="space-y-1 pr-4 mb-3 sm:mb-0">
+          <h2 class="text-lg md:text-xl font-serif font-bold text-ink group-hover:text-maroon transition-colors">${stotra.title}</h2>
+          <p class="text-ink-light text-sm line-clamp-2">${stotra.description}</p>
+        </div>
+        <div class="flex items-center space-x-2 text-maroon font-medium text-sm shrink-0 self-end sm:self-center">
+          <span>Read Stotra</span>
+          <svg class="w-4 h-4 transform group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+          </svg>
+        </div>
+      </div>
+    `).join('');
+  } catch (error) {
+    console.error('Failed to load stotras list:', error);
+    document.getElementById('stotrasGridView').innerHTML = '<p class="text-red-500 text-center py-4">Failed to load stotras</p>';
+  }
+}
+
+    // Load individual stotra data
+    async function loadStotra(id) {
+      if (stotrasData[id]) {
+        return stotrasData[id];
+      }
+      try {
+        const response = await fetch(`/api/stotras/${id}`);
+        const data = await response.json();
+        stotrasData[id] = data;
+        return data;
+      } catch (error) {
+        console.error(`Failed to load stotra ${id}:`, error);
+        return null;
+      }
+    }
+
+    // Load list on page load
+    document.addEventListener('DOMContentLoaded', loadStotrasList);
+
+    // Add scroll listener for floating controls
+    window.addEventListener('scroll', () => handleScroll());
+
+   function filterStotras() {
+  const searchTerm = document.getElementById('searchInput').value.toLowerCase().trim();
+  const cards = document.querySelectorAll('.stotra-card');
+  
+  cards.forEach(card => {
+    const title = card.dataset.title || '';
+    
+    // Checks only if the title includes the search term
+    if (title.includes(searchTerm)) {
+      card.style.display = ''; // Show card
+    } else {
+      card.style.display = 'none'; // Hide card
+    }
+  });
+}
+    function openStotraReader(id) {
+      try {
+        console.log('Opening stotra reader for id:', id);
+        
+        currentStotraId = id;
+        const stotra = stotrasData[id];
+        
+        if (!stotra) {
+          console.error('Stotra not found:', id);
+          // Try to load it if not loaded yet
+          loadStotra(id).then(() => {
+            openStotraReader(id);
+          });
+          return;
+        }
+        
+        // Update reader content
+        document.getElementById('readerTitle').textContent = stotra.title;
+        document.getElementById('readerDescription').textContent = stotra.description;
+        document.getElementById('stotraContent').textContent = stotra.languages.sanskrit.content;
+        document.getElementById('stotraContent').dataset.currentLanguage = 'sanskrit';
+      
+      // Reset language buttons
+      document.querySelectorAll('[id^="lang-btn-"]').forEach(btn => {
+        btn.classList.remove('bg-saffron', 'text-white', 'border-saffron');
+        btn.classList.add('bg-white', 'hover:bg-maroon/10');
+      });
+      document.getElementById('lang-btn-sanskrit').classList.add('bg-saffron', 'text-white', 'border-saffron');
+      document.getElementById('lang-btn-sanskrit').classList.remove('bg-white', 'hover:bg-maroon/10');
+      
+      // Hide search bar
+      document.getElementById('searchBar').classList.add('hidden');
+      
+      // Show reader view, hide grid
+      document.getElementById('stotrasGridView').classList.add('hidden');
+      document.getElementById('stotraReaderView').classList.remove('hidden');
+
+      // Hide global back-to-top button when in reader view
+      const globalBackToTop = document.getElementById('back-to-top');
+      if (globalBackToTop) {
+        globalBackToTop.classList.add('hidden');
+      }
+
+      // Check scroll position for floating controls
+      handleScroll();
+
+      // Scroll to top
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+      } catch (error) {
+        console.error('Error opening stotra reader:', error);
+        alert('Unable to open stotra. Please try again.');
+      }
+    }
+
+    function closeStotraReader() {
+      // Hide floating controls
+      const floatingControls = document.getElementById('floatingControls');
+      if (floatingControls) {
+        floatingControls.classList.add('hidden');
+      }
+
+      // Show global back-to-top button
+      const globalBackToTop = document.getElementById('back-to-top');
+      if (globalBackToTop) {
+        globalBackToTop.classList.remove('hidden');
+      }
+
+      // Show search bar
+      document.getElementById('searchBar').classList.remove('hidden');
+
+      // Show grid view, hide reader
+      document.getElementById('stotrasGridView').classList.remove('hidden');
+      document.getElementById('stotraReaderView').classList.add('hidden');
+
+      // Scroll to top
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    function changeLanguage(language) {
+      const stotra = stotrasData[currentStotraId];
+      if (stotra && stotra.languages[language]) {
+        document.getElementById('stotraContent').textContent = stotra.languages[language].content;
+        document.getElementById('stotraContent').dataset.currentLanguage = language;
+
+        // Update button styles
+        document.querySelectorAll('[id^="lang-btn-"]').forEach(btn => {
+          btn.classList.remove('bg-saffron', 'text-white', 'border-saffron');
+          btn.classList.add('bg-white', 'hover:bg-maroon/10');
+        });
+        const activeBtn = document.getElementById(`lang-btn-${language}`);
+        if (activeBtn) {
+          activeBtn.classList.add('bg-saffron', 'text-white', 'border-saffron');
+          activeBtn.classList.remove('bg-white', 'hover:bg-maroon/10');
+        }
+      } else {
+        console.warn(`Language ${language} not available for this stotra`);
+      }
+    }
+
+    function increaseFontSize() {
+      if (currentFontSize < 32) {
+        currentFontSize += 2;
+        updateFontSize();
+      }
+    }
+
+    function decreaseFontSize() {
+      if (currentFontSize > 12) {
+        currentFontSize -= 2;
+        updateFontSize();
+      }
+    }
+
+    function updateFontSize() {
+      const contentDiv = document.getElementById('stotraContent');
+      contentDiv.style.fontSize = currentFontSize + 'px';
+    }
+
+    window.filterStotras = filterStotras;
+    window.openStotraReader = openStotraReader;
+    window.closeStotraReader = closeStotraReader;
+    window.changeLanguage = changeLanguage;
+    window.increaseFontSize = increaseFontSize;
+    window.decreaseFontSize = decreaseFontSize;
+  </script>
+</Layout>
