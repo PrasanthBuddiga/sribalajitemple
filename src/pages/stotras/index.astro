@@ -1,0 +1,48 @@
+---
+import { getCollection } from 'astro:content';
+import Layout from '../../layouts/Layout.astro';
+import Header from '../../components/Header.astro';
+import Footer from '../../components/Footer.astro';
+
+const stotras = await getCollection('stotras');
+---
+
+<Layout title="Stotras & Chants | Sri Balaji Temple">
+  <Header />
+  
+  <div class="pt-20 md:pt-24 pb-16 md:pb-20 px-4">
+    <div class="max-w-6xl mx-auto">
+      <h1 class="text-3xl md:text-4xl font-serif font-bold text-ink mb-4 text-center">
+        📿 Stotras & Chants
+      </h1>
+      <p class="text-ink-light text-center mb-8">
+        Sacred hymns for your daily prayers and rituals
+      </p>
+
+      <!-- Stotras Grid View -->
+      <div class="space-y-4 max-w-4xl mx-auto">
+        {stotras.map((stotra) => (
+          <a 
+            href={`/stotras/${stotra.slug}`}
+            class="stotra-card group flex flex-col sm:flex-row items-start sm:items-center justify-between p-5 md:p-6 rounded-2xl bg-white/90 backdrop-blur-lg border border-maroon/15 hover:border-saffron shadow-sm hover:shadow-md transition-all block"
+          >
+            <div class="space-y-1 pr-4 mb-3 sm:mb-0">
+              <h2 class="text-lg md:text-xl font-serif font-bold text-ink group-hover:text-maroon transition-colors">
+                {stotra.data.title}
+              </h2>
+              <p class="text-ink-light text-sm line-clamp-2">{stotra.data.description}</p>
+            </div>
+            <div class="flex items-center space-x-2 text-maroon font-medium text-sm shrink-0 self-end sm:self-center">
+              <span>Read Stotra</span>
+              <svg class="w-4 h-4 transform group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+              </svg>
+            </div>
+          </a>
+        ))}
+      </div>
+    </div>
+  </div>
+
+  <Footer />
+</Layout>

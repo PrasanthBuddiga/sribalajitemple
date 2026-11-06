@@ -1,0 +1,160 @@
+---
+import { getCollection } from 'astro:content';
+import Layout from '../../layouts/Layout.astro';
+import Header from '../../components/Header.astro';
+import Footer from '../../components/Footer.astro';
+
+// 1. Generate static paths for every stotra folder
+export async function getStaticPaths() {
+  const stotras = await getCollection('stotras');
+  return stotras.map((entry) => ({
+    params: { slug: entry.slug },
+    props: { entry },
+  }));
+}
+
+const { entry } = Astro.props;
+const { data } = entry;
+
+// Read the text files dynamically based on language configuration
+import fs from 'node:fs';
+import path from 'node:path';
+
+const contentDir = path.join(process.cwd(), 'src/content/stotras', entry.slug);
+const languages = ['sanskrit', 'transliteration', 'telugu', 'kannada', 'tamil'];
+const languageNames = {
+  sanskrit: 'Sanskrit',
+  transliteration: 'English (IAST)',
+  telugu: 'తెలుగు',
+  kannada: 'ಕನ್ನಡ',
+  tamil: 'தமிழ்'
+};
+
+// Load all language contents server-side into a dictionary
+const stotraContentMap: Record<string, string> = {};
+for (const lang of languages) {
+  try {
+    const filePath = path.join(contentDir, `${lang}.txt`);
+    stotraContentMap[lang] = fs.readFileSync(filePath, 'utf-8');
+  } catch (e) {
+    stotraContentMap[lang] = 'Content not available in this language yet.';
+  }
+}
+---
+
+<Layout title={`${data.title} | Sri Balaji Temple`}>
+  <Header />
+  
+  <div class="pt-20 md:pt-24 pb-16 md:pb-20 px-4">
+    <div class="max-w-4xl mx-auto">
+      
+      <!-- Back Button with a real URL path -->
+      <a 
+        href="/stotras"
+        class="inline-flex items-center gap-2 mb-6 px-4 py-2 rounded-lg border border-maroon/20 hover:bg-maroon/10 transition-colors text-sm font-medium"
+      >
+        ← Back to All Stotras
+      </a>
+
+      <!-- Stotra Header -->
+      <div class="bg-white/85 backdrop-blur-lg border border-maroon/20 border-t-4 border-saffron rounded-2xl p-6 md:p-8 shadow-lg mb-6">
+        <h1 class="text-2xl md:text-3xl font-serif font-bold text-ink mb-2">{data.title}</h1>
+        <p class="text-ink-light text-sm">{data.description}</p>
+      </div>
+
+      <!-- Controls Bar -->
+      <div id="controlsBar" class="bg-white/85 backdrop-blur-lg border border-maroon/20 rounded-2xl p-4 md:p-6 shadow-lg mb-6">
+        <div class="flex flex-col md:flex-row gap-4 items-center justify-between">
+          <!-- Language Switcher -->
+          <div class="flex flex-wrap gap-2">
+            {languages.map(lang => (
+              <button
+                type="button"
+                id={`lang-btn-${lang}`}
+                onclick={`changeLanguage('${lang}')`}
+                class={`px-4 py-2 rounded-lg border border-maroon/20 transition-colors text-sm font-medium ${
+                  lang === 'sanskrit' ? 'bg-saffron text-white border-saffron' : 'bg-white hover:bg-maroon/10'
+                }`}
+              >
+                {languageNames[lang]}
+              </button>
+            ))}
+          </div>
+
+          <!-- Font Size Controls -->
+          <div class="flex items-center gap-2">
+            <button
+              type="button"
+              onclick="decreaseFontSize()"
+              class="px-3 py-2 rounded-lg border border-maroon/20 hover:bg-maroon/10 transition-colors font-bold"
+              aria-label="Decrease font size"
+            >
+              A-
+            </button>
+            <button
+              type="button"
+              onclick="increaseFontSize()"
+              class="px-3 py-2 rounded-lg border border-maroon/20 hover:bg-maroon/10 transition-colors font-bold"
+              aria-label="Increase font size"
+            >
+              A+
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Stotra Content Display -->
+      <div class="bg-white/85 backdrop-blur-lg border border-maroon/20 rounded-2xl p-6 md:p-8 shadow-lg">
+        <div
+          id="stotraContent"
+          class="stotra-content prose prose-lg max-w-none leading-relaxed whitespace-pre-line font-serif text-lg"
+        >
+          {stotraContentMap['sanskrit']}
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <Footer />
+
+  <script define:vars={{ stotraContentMap }}>
+    let currentFontSize = 18;
+
+    function changeLanguage(language) {
+      const contentBox = document.getElementById('stotraContent');
+      if (stotraContentMap[language]) {
+        contentBox.textContent = stotraContentMap[language];
+
+        // Update active button styles
+        document.querySelectorAll('[id^="lang-btn-"]').forEach(btn => {
+          btn.classList.remove('bg-saffron', 'text-white', 'border-saffron');
+          btn.classList.add('bg-white', 'hover:bg-maroon/10');
+        });
+        const activeBtn = document.getElementById(`lang-btn-${language}`);
+        if (activeBtn) {
+          activeBtn.classList.add('bg-saffron', 'text-white', 'border-saffron');
+          activeBtn.classList.remove('bg-white', 'hover:bg-maroon/10');
+        }
+      }
+    }
+
+    function increaseFontSize() {
+      if (currentFontSize < 32) {
+        currentFontSize += 2;
+        document.getElementById('stotraContent').style.fontSize = currentFontSize + 'px';
+      }
+    }
+
+    function decreaseFontSize() {
+      if (currentFontSize > 12) {
+        currentFontSize -= 2;
+        document.getElementById('stotraContent').style.fontSize = currentFontSize + 'px';
+      }
+    }
+
+    window.changeLanguage = changeLanguage;
+    window.increaseFontSize = increaseFontSize;
+    window.decreaseFontSize = decreaseFontSize;
+  </script>
+</Layout>
