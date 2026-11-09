@@ -3,12 +3,14 @@ import { getCollection } from 'astro:content';
 import Layout from '../../layouts/Layout.astro';
 import Header from '../../components/Header.astro';
 import Footer from '../../components/Footer.astro';
+import fs from 'node:fs';
+import path from 'node:path';
 
-// 1. Generate static paths for every stotra folder
 export async function getStaticPaths() {
   const stotras = await getCollection('stotras');
+  
   return stotras.map((entry) => ({
-    params: { slug: entry.slug },
+    params: { slug: entry.slug || entry.id },
     props: { entry },
   }));
 }
@@ -16,21 +18,19 @@ export async function getStaticPaths() {
 const { entry } = Astro.props;
 const { data } = entry;
 
-// Read the text files dynamically based on language configuration
-import fs from 'node:fs';
-import path from 'node:path';
+const slugKey = entry.slug || entry.id;
+const contentDir = path.join(process.cwd(), 'src/content/stotras', slugKey);
 
-const contentDir = path.join(process.cwd(), 'src/content/stotras', entry.slug);
 const languages = ['sanskrit', 'transliteration', 'telugu', 'kannada', 'tamil'];
+
 const languageNames = {
-  sanskrit: 'Sanskrit',
-  transliteration: 'English (IAST)',
-  telugu: 'తెలుగు',
-  kannada: 'ಕನ್ನಡ',
-  tamil: 'தமிழ்'
+  sanskrit: 'संस्कृतम्',          // Sanskrit in Devanagari script
+  transliteration: 'English (IAST)', // Keep clear for English readers
+  telugu: 'తెలుగు',             // Telugu script
+  kannada: 'ಕನ್ನಡ',             // Kannada script
+  tamil: 'தமிழ்'                // Tamil script
 };
 
-// Load all language contents server-side into a dictionary
 const stotraContentMap: Record<string, string> = {};
 for (const lang of languages) {
   try {

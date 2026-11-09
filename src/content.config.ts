@@ -1,7 +1,8 @@
 import { defineCollection, z } from 'astro:content';
+import { glob } from 'astro/loaders';
 
-const stotrasCollection = defineCollection({
-  type: 'content',
+const stotras = defineCollection({
+  loader: glob({ pattern: '**/index.md', base: './src/content/stotras' }),
   schema: z.object({
     title: z.string(),
     description: z.string(),
@@ -11,5 +12,5 @@ const stotrasCollection = defineCollection({
 });
 
 export const collections = {
-  'stotras': stotrasCollection,
+  stotras,
 };

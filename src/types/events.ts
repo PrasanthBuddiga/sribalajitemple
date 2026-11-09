@@ -30,5 +30,6 @@ export interface TempleVideo {
   title: string;
   description: string;
   youtube_url: string;
+  thumbnail_url?: string;
   upload_date: string;
 }

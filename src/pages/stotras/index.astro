@@ -23,7 +23,7 @@ const stotras = await getCollection('stotras');
       <div class="space-y-4 max-w-4xl mx-auto">
         {stotras.map((stotra) => (
           <a 
-            href={`/stotras/${stotra.slug}`}
+            href={`/stotras/${stotra.id}`}
             class="stotra-card group flex flex-col sm:flex-row items-start sm:items-center justify-between p-5 md:p-6 rounded-2xl bg-white/90 backdrop-blur-lg border border-maroon/15 hover:border-saffron shadow-sm hover:shadow-md transition-all block"
           >
             <div class="space-y-1 pr-4 mb-3 sm:mb-0">
