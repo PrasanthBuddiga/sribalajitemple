@@ -19,15 +19,15 @@ const remainingCount = Math.max(0, photos.length - 3); // total - 3
 const showOverlay = photos.length > 3;
 ---
 
-<div class="rounded-2xl bg-white/80 border border-maroon/20 overflow-hidden shadow-lg flex flex-col cursor-pointer group max-w-md" onclick={`openGallery(0, '${escapedTitle}')`}>
+<div class="rounded-2xl bg-white/80 border border-maroon/20 overflow-hidden shadow-lg flex flex-col cursor-pointer group w-full max-w-sm md:max-w-md" onclick={`openGallery(0, '${escapedTitle}')`}>
   <div class="p-3 md:p-4 border-b border-maroon/20">
     <h3 class="text-base md:text-lg font-bold text-ink">{title}</h3>
   </div>
 
-  <div class="flex-1 p-2 md:p-3">
-    <div class="grid grid-cols-2 gap-1.5 md:gap-2">
+  <div class="flex-1 p-3 md:p-4">
+    <div class="grid grid-cols-2 gap-2 md:gap-3 h-72">
       <!-- Photo 1 -->
-      <div class="relative aspect-square overflow-hidden rounded-md">
+      <div class="relative overflow-hidden rounded-lg">
         {previewPhotos[0] ? (
           <img src={previewPhotos[0].url} alt={previewPhotos[0].alt} class="w-full h-full object-cover" />
         ) : (
@@ -36,7 +36,7 @@ const showOverlay = photos.length > 3;
       </div>
 
       <!-- Photo 2 -->
-      <div class="relative aspect-square overflow-hidden rounded-md">
+      <div class="relative overflow-hidden rounded-lg">
         {previewPhotos[1] ? (
           <img src={previewPhotos[1].url} alt={previewPhotos[1].alt} class="w-full h-full object-cover" />
         ) : (
@@ -45,7 +45,7 @@ const showOverlay = photos.length > 3;
       </div>
 
       <!-- Photo 3 -->
-      <div class="relative aspect-square overflow-hidden rounded-md">
+      <div class="relative overflow-hidden rounded-lg">
         {previewPhotos[2] ? (
           <img src={previewPhotos[2].url} alt={previewPhotos[2].alt} class="w-full h-full object-cover" />
         ) : (
@@ -54,7 +54,7 @@ const showOverlay = photos.length > 3;
       </div>
 
       <!-- Photo 4 with overlay -->
-      <div class="relative aspect-square overflow-hidden rounded-md">
+      <div class="relative overflow-hidden rounded-lg">
         {previewPhotos[3] ? (
           <img src={previewPhotos[3].url} alt={previewPhotos[3].alt} class="w-full h-full object-cover" />
         ) : (
