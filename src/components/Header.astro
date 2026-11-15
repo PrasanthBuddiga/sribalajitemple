@@ -29,15 +29,12 @@ const currentPage = Astro.url.pathname;
 
 <header class="fixed top-0 left-0 right-0 z-50 bg-[#FDFBF7]/95 backdrop-blur-md border-b border-amber-900/10">
   <nav class="max-w-7xl mx-auto px-6 py-3.5 md:py-4 flex items-center justify-between">
-    <!-- Brand Logo (Classic, dignified temple typography) -->
+    <!-- Brand Logo (Rounded Serif Temple Typography) -->
     <a
       href="/"
-      class="group flex items-center gap-3 text-xl md:text-[26px] font-bold tracking-tight text-maroon hover:text-saffron transition-colors duration-300"
+      class="group flex items-center gap-3 text-xl md:text-[26px] font-serif font-bold tracking-tight text-maroon hover:text-saffron transition-colors duration-300"
       style="font-family: 'Playfair Display', serif;"
     >
-      <span class="w-10 h-10 rounded-full bg-gradient-to-br from-amber-100 to-orange-100 border border-amber-500/25 flex items-center justify-center text-xl shadow-sm group-hover:scale-105 transition-transform duration-300">
-        🛕
-      </span>
       <span>
         Sri Balaji <span class="text-saffron group-hover:text-maroon transition-colors duration-300">Temple</span>
       </span>
@@ -98,7 +95,7 @@ const currentPage = Astro.url.pathname;
       </a>
     </div>
 
-    <!-- Right Pill CTA Button (Clean Sponsor button without emoji) -->
+    <!-- Right Pill CTA Button -->
     <div class="hidden lg:flex items-center" style="font-family: 'Plus Jakarta Sans', sans-serif;">
       <a
         href="/sponsor"
@@ -132,10 +129,9 @@ const currentPage = Astro.url.pathname;
         <a
           href="/"
           onclick="closeMobileMenu()"
-          class="flex items-center gap-2.5 text-xl font-bold text-maroon"
+          class="flex items-center gap-2.5 text-xl font-serif font-bold text-maroon"
           style="font-family: 'Playfair Display', serif;"
         >
-          <span>🛕</span>
           <span>Sri Balaji <span class="text-saffron">Temple</span></span>
         </a>
         <button

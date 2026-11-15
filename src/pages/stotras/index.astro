@@ -10,37 +10,51 @@ const stotras = await getCollection('stotras');
 <Layout title="Stotras & Chants | Sri Balaji Temple">
   <Header />
   
-  <div class="pt-20 md:pt-24 pb-16 md:pb-20 px-4">
-    <div class="max-w-6xl mx-auto">
-      <h1 class="text-3xl md:text-4xl font-serif font-bold text-ink mb-4 text-center">
-        📿 Stotras & Chants
-      </h1>
-      <p class="text-ink-light text-center mb-8">
-        Sacred hymns for your daily prayers and rituals
-      </p>
+  <div class="pt-24 md:pt-28 pb-20 md:pb-24 px-4 sm:px-6 relative">
+    <div class="absolute inset-0 bg-grid-pattern -z-10 pointer-events-none"></div>
+    <div class="max-w-4xl mx-auto">
+      
+      <!-- Page Header -->
+      <div class="text-center mb-12 animate-fade-in-up">
+        <h1 class="text-3xl md:text-5xl font-serif font-bold text-amber-950 mb-3">
+          📿 Stotras & Chants
+        </h1>
+        <p class="text-stone-600 text-base md:text-lg max-w-xl mx-auto">
+          Sacred hymns for your daily prayers, spiritual reflection, and traditional rituals.
+        </p>
+      </div>
 
-      <!-- Stotras Grid View -->
-      <div class="space-y-4 max-w-4xl mx-auto">
+      <!-- Stotras Cards List -->
+      <div class="flex flex-col gap-5">
         {stotras.map((stotra) => (
           <a 
             href={`/stotras/${stotra.id}`}
-            class="stotra-card group flex flex-col sm:flex-row items-start sm:items-center justify-between p-5 md:p-6 rounded-2xl bg-white/90 backdrop-blur-lg border border-maroon/15 hover:border-saffron shadow-sm hover:shadow-md transition-all block"
+            class="group relative rounded-[2.25rem] bg-white/90 backdrop-blur-md border border-amber-900/10 hover:border-saffron/40 p-6 md:p-8 shadow-[0_20px_50px_rgba(139,69,19,0.08)] hover:shadow-[0_28px_60px_rgba(217,119,6,0.16)] transition-all duration-500 ease-out flex flex-col sm:flex-row items-start sm:items-center justify-between gap-6 hover:-translate-y-1.5 overflow-hidden block"
           >
-            <div class="space-y-1 pr-4 mb-3 sm:mb-0">
-              <h2 class="text-lg md:text-xl font-serif font-bold text-ink group-hover:text-maroon transition-colors">
+            <!-- Ambient Glow on Hover -->
+            <div class="pointer-events-none absolute -top-16 -right-16 w-40 h-40 rounded-full bg-gradient-to-br from-amber-400/20 to-orange-500/0 blur-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+
+            <!-- Content -->
+            <div class="relative z-10 space-y-2 pr-2 flex-1">
+              <h2 class="text-xl md:text-2xl font-serif font-bold text-amber-950 group-hover:text-saffron transition-colors">
                 {stotra.data.title}
               </h2>
-              <p class="text-ink-light text-sm line-clamp-2">{stotra.data.description}</p>
+              <p class="text-stone-600 text-sm md:text-base leading-relaxed line-clamp-2">
+                {stotra.data.description}
+              </p>
             </div>
-            <div class="flex items-center space-x-2 text-maroon font-medium text-sm shrink-0 self-end sm:self-center">
-              <span>Read Stotra</span>
-              <svg class="w-4 h-4 transform group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
-              </svg>
+
+            <!-- Action Button -->
+            <div class="relative z-10 shrink-0 self-end sm:self-center">
+              <span class="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-amber-50 group-hover:bg-saffron text-amber-900 group-hover:text-white font-semibold text-sm transition-all duration-300 shadow-sm group-hover:shadow-md group-hover:scale-105">
+                <span>Read Stotra</span>
+                <span class="transform group-hover:translate-x-1 transition-transform duration-200">→</span>
+              </span>
             </div>
           </a>
         ))}
       </div>
+
     </div>
   </div>
 

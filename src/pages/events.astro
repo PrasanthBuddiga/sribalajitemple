@@ -5,6 +5,7 @@ import EventCard from '../components/EventCard.astro';
 import FlyerModal from '../components/FlyerModal.astro';
 import Footer from '../components/Footer.astro';
 import type { TempleEvent } from '../types/events';
+import SacredWatermark from '../components/SacredWatermark.astro';
 
 // Fetch events from WordPress API
 const WORDPRESS_API_URL = 'https://sribalajitemple.org';
@@ -26,10 +27,11 @@ try {
 <Layout title="Events & Poojas | Sri Balaji Temple">
   <Header />
   
-  <div class="pt-24 pb-24 px-6 relative">
-    <div class="absolute inset-0 bg-grid-pattern -z-10"></div>
-    <div class="max-w-7xl mx-auto">
-      <div class="text-center mb-16 animate-fade-in-up">
+  <div class="pt-24 md:pt-28 pb-20 md:pb-24 px-6 relative">
+    <div class="absolute inset-0 bg-grid-pattern -z-10 pointer-events-none"></div>
+    <div class="max-w-4xl mx-auto">
+      <div class="text-center mb-12 animate-fade-in-up">
+        <!-- <SacredWatermark className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[32rem] h-[32rem] opacity-[0.09] pointer-events-none -z-10" /> -->
         <h1 class="text-4xl md:text-5xl font-serif font-bold text-ink mb-4">Events & Poojas</h1>
         <p class="text-ink-light text-lg max-w-2xl mx-auto">
           Join us for special celebrations, poojas, and cultural events throughout the year.
@@ -37,7 +39,7 @@ try {
         </p>
       </div>
 
-      <!-- EVENT CARDS GRID -->
+      <!-- HORIZONTAL EVENT CARDS LIST -->
       {error ? (
         <div class="text-center py-20 bg-red-50 border border-red-200 rounded-2xl">
           <p class="text-red-600 text-lg mb-2">Unable to load events from the temple website.</p>
@@ -49,11 +51,11 @@ try {
           <p class="text-ink-light text-lg">No events currently scheduled. Please check back soon!</p>
         </div>
       ) : (
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {events.map((event) => (
-            <EventCard event={event} />
-          ))}
-        </div>
+        <div class="max-w-4xl mx-auto flex flex-col gap-5">
+  {events.map((event) => (
+    <EventCard event={event} />
+  ))}
+</div>
       )}
     </div>
   </div>
