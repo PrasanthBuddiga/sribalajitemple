@@ -19,50 +19,72 @@ const remainingCount = Math.max(0, photos.length - 3); // total - 3
 const showOverlay = photos.length > 3;
 ---
 
-<div class="rounded-[2rem] glass-card border border-maroon/10 overflow-hidden shadow-xl hover:shadow-2xl hover:shadow-maroon/10 flex flex-col cursor-pointer group w-full max-w-sm md:max-w-md transition-all duration-300 hover-lift hover-border-animate" onclick={`openGallery(0, '${escapedTitle}')`}>
-  <div class="p-4 md:p-5 border-b border-maroon/10">
-    <h3 class="text-base md:text-lg font-bold text-ink">{title}</h3>
+<div
+  class="w-full h-full rounded-[2.25rem] bg-white/90 backdrop-blur-md border border-amber-900/10 overflow-hidden shadow-[0_20px_50px_rgba(139,69,19,0.08)] hover:shadow-[0_28px_60px_rgba(217,119,6,0.16)] flex flex-col cursor-pointer group transition-all duration-500 ease-out hover:-translate-y-2"
+  onclick={`openGallery(0, '${escapedTitle}')`}
+>
+  <div class="px-6 py-5 border-b border-amber-900/10 flex items-center justify-between gap-3">
+    <h3 class="text-lg md:text-xl font-serif font-bold text-amber-950 truncate">{title}</h3>
+    <span class="shrink-0 text-xs font-semibold px-3 py-1 rounded-full bg-amber-100/80 text-amber-900 border border-amber-500/20">
+      {photos.length} {photos.length === 1 ? 'photo' : 'photos'}
+    </span>
   </div>
 
-  <div class="flex-1 p-3 md:p-4">
-    <div class="grid grid-cols-2 gap-2 md:gap-3 h-72">
+  <div class="flex-1 p-4 md:p-5">
+    <div class="grid grid-cols-2 gap-3">
       <!-- Photo 1 -->
-      <div class="relative overflow-hidden rounded-xl overflow-hidden">
+      <div class="relative aspect-square overflow-hidden rounded-2xl bg-amber-50">
         {previewPhotos[0] ? (
-          <img src={previewPhotos[0].url} alt={previewPhotos[0].alt} class="w-full h-full object-cover hover-zoom" />
+          <img
+            src={previewPhotos[0].url}
+            alt={previewPhotos[0].alt}
+            class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+          />
         ) : (
           <div class="w-full h-full bg-maroon/10"></div>
         )}
       </div>
 
       <!-- Photo 2 -->
-      <div class="relative overflow-hidden rounded-xl overflow-hidden">
+      <div class="relative aspect-square overflow-hidden rounded-2xl bg-amber-50">
         {previewPhotos[1] ? (
-          <img src={previewPhotos[1].url} alt={previewPhotos[1].alt} class="w-full h-full object-cover hover-zoom" />
+          <img
+            src={previewPhotos[1].url}
+            alt={previewPhotos[1].alt}
+            class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+          />
         ) : (
           <div class="w-full h-full bg-maroon/10"></div>
         )}
       </div>
 
       <!-- Photo 3 -->
-      <div class="relative overflow-hidden rounded-xl overflow-hidden">
+      <div class="relative aspect-square overflow-hidden rounded-2xl bg-amber-50">
         {previewPhotos[2] ? (
-          <img src={previewPhotos[2].url} alt={previewPhotos[2].alt} class="w-full h-full object-cover hover-zoom" />
+          <img
+            src={previewPhotos[2].url}
+            alt={previewPhotos[2].alt}
+            class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+          />
         ) : (
           <div class="w-full h-full bg-maroon/10"></div>
         )}
       </div>
 
       <!-- Photo 4 with overlay -->
-      <div class="relative overflow-hidden rounded-xl overflow-hidden">
+      <div class="relative aspect-square overflow-hidden rounded-2xl bg-amber-50">
         {previewPhotos[3] ? (
-          <img src={previewPhotos[3].url} alt={previewPhotos[3].alt} class="w-full h-full object-cover hover-zoom" />
+          <img
+            src={previewPhotos[3].url}
+            alt={previewPhotos[3].alt}
+            class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+          />
         ) : (
           <div class="w-full h-full bg-maroon/10"></div>
         )}
         {showOverlay && (
-          <div class="absolute inset-0 bg-black/60 flex items-center justify-center z-10 backdrop-blur-sm">
-            <span class="text-white font-bold text-lg md:text-xl">+{remainingCount}</span>
+          <div class="absolute inset-0 bg-black/55 flex items-center justify-center z-10 backdrop-blur-[2px] group-hover:bg-black/45 transition-colors">
+            <span class="text-white font-bold text-xl md:text-2xl tracking-tight">+{remainingCount}</span>
           </div>
         )}
       </div>

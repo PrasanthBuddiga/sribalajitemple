@@ -63,7 +63,6 @@ async function getYouTubeTitle(youtubeUrl: string): Promise<string | null> {
 }
 
 // Transform videos to extract YouTube IDs and fetch YouTube titles
-// Note: YouTube oEmbed doesn't provide descriptions, so we keep WordPress description
 const videosWithMetadata = await Promise.all(videos.map(async (video) => {
   const youtubeId = getYouTubeId(video.youtube_url);
   const youtubeTitle = await getYouTubeTitle(video.youtube_url);
@@ -77,8 +76,8 @@ const videosWithMetadata = await Promise.all(videos.map(async (video) => {
   return {
     ...video,
     youtubeId,
-    title: youtubeTitle || video.title, // Use YouTube title if available, otherwise WordPress title
-    description: video.description, // Keep WordPress description (oEmbed doesn't provide descriptions)
+    title: youtubeTitle || video.title,
+    description: video.description,
     thumbnailUrl
   };
 }));
@@ -87,9 +86,9 @@ const videosWithMetadata = await Promise.all(videos.map(async (video) => {
 <Layout title="Gallery | Sri Balaji Temple">
   <Header />
   
-  <div class="pt-20 md:pt-24 pb-16 md:pb-20 px-4">
-    <div class="max-w-6xl mx-auto">
-      <div class="text-center mb-12">
+  <div class="pt-24 md:pt-28 pb-16 md:pb-24 px-6">
+    <div class="max-w-7xl mx-auto">
+      <div class="text-center mb-14 animate-fade-in-up">
         <h1 class="text-4xl md:text-5xl font-serif font-bold text-ink mb-4">Photo & Video Gallery</h1>
         <p class="text-ink-light text-lg max-w-2xl mx-auto">
           Explore our collection of memorable moments from temple festivals, celebrations, and cultural events.
@@ -97,8 +96,8 @@ const videosWithMetadata = await Promise.all(videos.map(async (video) => {
       </div>
 
       <!-- PHOTO GALLERY SECTION -->
-      <section class="mb-24 py-12 relative">
-        <div class="absolute inset-0 bg-grid-pattern -z-10"></div>
+      <section class="mb-24 py-8 relative">
+        <div class="absolute inset-0 bg-grid-pattern -z-10 pointer-events-none"></div>
         <h2 class="text-3xl md:text-4xl font-serif font-bold text-ink mb-8 animate-fade-in-up">Photo Albums</h2>
         
         {error ? (
@@ -112,9 +111,17 @@ const videosWithMetadata = await Promise.all(videos.map(async (video) => {
             <p class="text-ink-light text-lg">No gallery items available. Please check back soon!</p>
           </div>
         ) : (
-          <div class="flex flex-col md:flex-row gap-6 md:gap-8 justify-center">
+          <div
+            class={`grid grid-cols-1 gap-8 ${
+              albumsForComponent.length === 1
+                ? 'max-w-md mx-auto'
+                : albumsForComponent.length === 2
+                ? 'md:grid-cols-2 max-w-4xl mx-auto'
+                : 'md:grid-cols-2 lg:grid-cols-3'
+            }`}
+          >
             {albumsForComponent.map((album, index) => (
-              <div class={`animate-fade-in-up animate-delay-${(index + 1) * 100}`}>
+              <div class={`w-full h-full animate-fade-in-up animate-delay-${(index + 1) * 100}`}>
                 <GalleryAlbum title={album.title} photos={album.photos} />
               </div>
             ))}
@@ -123,71 +130,87 @@ const videosWithMetadata = await Promise.all(videos.map(async (video) => {
       </section>
 
       <!-- VIDEO GALLERY SECTION -->
-      <section>
-        <h2 class="text-2xl font-serif font-bold text-ink mb-8">Video Gallery</h2>
-        
-        {error ? (
-          <div class="text-center py-12 bg-red-50 border border-red-200 rounded-2xl">
-            <p class="text-red-600 text-lg mb-2">Unable to load videos from the temple website.</p>
-            <p class="text-red-500 text-sm">Error: {error}</p>
-            <p class="text-ink-light text-sm mt-4">Please try again later or contact the temple administrator.</p>
-          </div>
-        ) : videosWithMetadata.length === 0 ? (
-          <div class="text-center py-12">
-            <p class="text-ink-light text-lg">No videos available. Please check back soon!</p>
-          </div>
-        ) : (
-          <div class="relative">
-            <!-- Carousel Container -->
-            <div id="video-carousel" class="flex gap-6 overflow-x-auto scroll-smooth snap-x snap-mandatory scrollbar-hide pb-4" style="scroll-behavior: smooth; -webkit-overflow-scrolling: touch;" data-videos={JSON.stringify(videosWithMetadata)}>
-              {videosWithMetadata.map((video, index) => (
-                <div class="flex-shrink-0 w-[85%] md:w-[calc(50%-12px)] lg:w-[calc(33.333%-16px)] snap-start">
-                  <div class="rounded-2xl bg-white/80 border border-maroon/20 overflow-hidden shadow-lg h-full flex flex-col">
-                    <div class="aspect-video relative group cursor-pointer overflow-hidden" onclick={`loadVideo(${index})`}>
-                      <!-- Thumbnail -->
-                      <img 
-                        src={video.thumbnailUrl} 
-                        alt={video.title} 
-                        class="w-full h-full object-cover transform scale-110"
-                      />
-                      <!-- Custom Play Button -->
-                      <div class="absolute inset-0 flex items-center justify-center bg-black/20 group-hover:bg-black/30 transition-colors">
-                        <div class="w-16 h-16 rounded-full bg-white/90 flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform">
-                          <svg viewBox="0 0 24 24" fill="currentColor" class="w-8 h-8 text-saffron ml-1">
-                            <path d="M8 5v14l11-7z"/>
-                          </svg>
-                        </div>
-                      </div>
-                      <!-- Hidden iframe container -->
-                      <div id={`video-container-${index}`} class="hidden absolute inset-0"></div>
-                    </div>
-                    <div class="p-6 flex-1 flex flex-col">
-                      <h3 class="text-lg font-bold text-ink mb-2 line-clamp-2">{video.title}</h3>
-                      <p class="text-ink-light text-sm line-clamp-3 flex-grow">{video.description}</p>
+      <!-- VIDEO GALLERY SECTION -->
+<section class="mt-20">
+  <div class="text-center mb-10">
+    <h2 class="text-3xl md:text-4xl font-serif font-bold text-ink mb-2">Video Gallery</h2>
+    <p class="text-ink-light">Watch highlights of our recent festivals, poojas, and cultural celebrations.</p>
+  </div>
+  
+  {error ? (
+    <div class="text-center py-12 bg-red-50 border border-red-200 rounded-2xl">
+      <p class="text-red-600 text-lg mb-2">Unable to load videos from the temple website.</p>
+      <p class="text-red-500 text-sm">Error: {error}</p>
+      <p class="text-ink-light text-sm mt-4">Please try again later or contact the temple administrator.</p>
+    </div>
+  ) : videosWithMetadata.length === 0 ? (
+    <div class="text-center py-12">
+      <p class="text-ink-light text-lg">No videos available. Please check back soon!</p>
+    </div>
+  ) : (
+    <div class="relative">
+      <!-- Carousel Container -->
+      <div
+        id="video-carousel"
+        class="flex gap-6 overflow-x-auto scroll-smooth snap-x snap-mandatory scrollbar-hide pb-6 pt-2"
+        style="scroll-behavior: smooth; -webkit-overflow-scrolling: touch;"
+        data-videos={JSON.stringify(videosWithMetadata)}
+      >
+        {videosWithMetadata.map((video, index) => (
+          <div class="flex-shrink-0 w-[85%] md:w-[calc(50%-12px)] lg:w-[calc(33.333%-16px)] snap-start">
+            <div class="rounded-[2.25rem] bg-white/90 backdrop-blur-md border border-amber-900/10 overflow-hidden shadow-[0_15px_40px_rgba(139,69,19,0.08)] hover:shadow-[0_24px_50px_rgba(217,119,6,0.14)] transition-all duration-300 h-full flex flex-col group hover:-translate-y-1">
+              
+              <!-- Video Thumbnail & Play Overlay -->
+              <div class="p-3.5 pb-0">
+                <div class="aspect-video relative group/thumb cursor-pointer overflow-hidden rounded-2xl bg-amber-50" onclick={`loadVideo(${index})`}>
+                  <img 
+                    src={video.thumbnailUrl} 
+                    alt={video.title} 
+                    class="w-full h-full object-cover group-hover/thumb:scale-105 transition-transform duration-500"
+                  />
+                  <!-- Styled Play Button Overlay -->
+                  <div class="absolute inset-0 flex items-center justify-center bg-black/25 group-hover/thumb:bg-black/40 transition-colors">
+                    <div class="w-14 h-14 rounded-full bg-white/95 backdrop-blur-md flex items-center justify-center shadow-lg group-hover/thumb:scale-110 transition-transform">
+                      <svg viewBox="0 0 24 24" fill="currentColor" class="w-7 h-7 text-saffron ml-1">
+                        <path d="M8 5v14l11-7z"/>
+                      </svg>
                     </div>
                   </div>
+                  <!-- Hidden iframe container -->
+                  <div id={`video-container-${index}`} class="hidden absolute inset-0"></div>
                 </div>
-              ))}
-            </div>
+              </div>
 
-            <!-- Navigation Arrows -->
-            <button 
-              onclick="scrollCarousel('left')"
-              class="absolute left-0 top-1/2 -translate-y-1/2 -translate-x-1/2 z-10 w-12 h-12 rounded-full bg-white/90 backdrop-blur-md text-maroon hover:bg-saffron hover:text-white flex items-center justify-center font-bold transition-all duration-300 shadow-lg border border-maroon/20 hidden md:flex"
-              aria-label="Previous videos"
-            >
-              ←
-            </button>
-            <button 
-              onclick="scrollCarousel('right')"
-              class="absolute right-0 top-1/2 -translate-y-1/2 translate-x-1/2 z-10 w-12 h-12 rounded-full bg-white/90 backdrop-blur-md text-maroon hover:bg-saffron hover:text-white flex items-center justify-center font-bold transition-all duration-300 shadow-lg border border-maroon/20 hidden md:flex"
-              aria-label="Next videos"
-            >
-              →
-            </button>
+              <!-- Content with Serif Title -->
+              <div class="p-6 flex-1 flex flex-col justify-between">
+                <h3 class="text-lg font-serif font-bold text-amber-950 mb-2 line-clamp-2 leading-snug">{video.title}</h3>
+                {video.description && (
+                  <p class="text-stone-600 text-sm line-clamp-2">{video.description}</p>
+                )}
+              </div>
+            </div>
           </div>
-        )}
-      </section>
+        ))}
+      </div>
+
+      <!-- Navigation Arrows -->
+      <button 
+        onclick="scrollCarousel('left')"
+        class="absolute left-0 top-1/2 -translate-y-1/2 -translate-x-1/2 z-10 w-12 h-12 rounded-full bg-white/95 backdrop-blur-md text-maroon hover:bg-saffron hover:text-white flex items-center justify-center font-bold transition-all duration-300 shadow-lg border border-amber-900/15 hidden md:flex cursor-pointer"
+        aria-label="Previous videos"
+      >
+        ←
+      </button>
+      <button 
+        onclick="scrollCarousel('right')"
+        class="absolute right-0 top-1/2 -translate-y-1/2 translate-x-1/2 z-10 w-12 h-12 rounded-full bg-white/95 backdrop-blur-md text-maroon hover:bg-saffron hover:text-white flex items-center justify-center font-bold transition-all duration-300 shadow-lg border border-amber-900/15 hidden md:flex cursor-pointer"
+        aria-label="Next videos"
+      >
+        →
+      </button>
+    </div>
+  )}
+</section>
     </div>
   </div>
 

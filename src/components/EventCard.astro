@@ -10,62 +10,78 @@ const flyerUrl = event.image_url || 'https://via.placeholder.com/600x800?text=Te
 const escapedTitle = JSON.stringify(event.title);
 ---
 
-<div class="group rounded-[2rem] glass-card border border-maroon/10 hover:border-saffron/30 transition-all duration-300 overflow-hidden shadow-xl hover:shadow-2xl hover:shadow-maroon/10 flex flex-col h-full hover-lift hover-border-animate">
-  <!-- THUMBNAIL (CLICK OPENS FULL FLYER) -->
-  <div class="relative h-52 md:h-56 overflow-hidden cursor-pointer" onclick={`openModal('${flyerUrl}', ${escapedTitle})`}>
-    <img src={flyerUrl} alt={event.title} class="w-full h-full object-cover hover-zoom" />
-    <div class="absolute inset-0 bg-gradient-to-t from-maroon/80 via-maroon/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex items-end justify-center p-4">
-      <span class="text-white text-xs font-semibold uppercase tracking-wider backdrop-blur-sm">Click to View Flyer</span>
-    </div>
-  </div>
-
-  <!-- CARD CONTENT -->
-  <div class="p-5 md:p-6 flex-1 flex flex-col justify-between">
-    <div>
-      <h3 class="text-lg md:text-xl font-bold text-ink group-hover:text-saffron transition-colors">{event.title}</h3>
-      <div class="text-ink-light text-sm mt-2 line-clamp-3" set:html={event.description} />
-
-      <!-- Event Details -->
-      <div class="mt-4 space-y-2 text-xs md:text-sm text-ink-light">
-        {event.event_date && (
-          <p class="flex items-center">
-            <span class="text-saffron mr-2">📅</span>
-            {new Date(event.event_date).toLocaleDateString('en-US', {
-      weekday: 'short',
-      year: 'numeric',
-      month: 'short',
-      day: 'numeric',
-      timeZone: 'UTC'
-    })}
-  </p>
-)}
-        {event.time && (
-          <p class="flex items-center">
-            <span class="text-saffron mr-2">⏰</span>
-            {event.time}
-          </p>
-        )}
-        {event.location && (
-          <p class="flex items-center">
-            <span class="text-saffron mr-2">📍</span>
-            {event.location}
-          </p>
-        )}
+<div
+  class="group rounded-[2rem] bg-white/90 backdrop-blur-md border border-amber-900/10 hover:border-saffron/40 transition-all duration-300 ease-out p-5 sm:p-6 shadow-[0_10px_30px_rgba(139,69,19,0.06)] hover:shadow-[0_18px_40px_rgba(217,119,6,0.13)] flex flex-col sm:flex-row sm:items-center justify-between gap-5 hover:-translate-y-1 cursor-pointer"
+  onclick={`openModal('${flyerUrl}', ${escapedTitle})`}
+>
+  <!-- LEFT + MIDDLE: THUMBNAIL & EVENT INFO -->
+  <div class="flex flex-col sm:flex-row items-start sm:items-center gap-4 sm:gap-6 min-w-0 flex-1">
+    <!-- Square Flyer Preview -->
+    <div class="relative w-full sm:w-28 h-40 sm:h-28 shrink-0 rounded-2xl overflow-hidden bg-amber-50 border border-amber-900/10">
+      <img
+        src={flyerUrl}
+        alt={event.title}
+        class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+      />
+      <div class="absolute inset-0 bg-black/35 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+        <span class="text-white text-xs font-bold uppercase tracking-wider bg-black/50 px-3 py-1 rounded-full backdrop-blur-sm">
+          View Flyer
+        </span>
       </div>
     </div>
 
+    <!-- Title & Date/Time Pills -->
+    <div class="min-w-0 flex-1">
+      <div class="flex flex-wrap items-center gap-2 mb-2 text-xs font-semibold text-amber-900">
+        {event.event_date && (
+          <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-amber-100/85 border border-amber-500/20">
+            <span>📅</span>
+            <span>
+              {new Date(event.event_date).toLocaleDateString('en-US', {
+                weekday: 'short',
+                month: 'short',
+                day: 'numeric',
+                year: 'numeric',
+                timeZone: 'UTC',
+              })}
+            </span>
+          </span>
+        )}
+        {event.time && (
+          <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-amber-50 border border-amber-900/10 text-stone-700">
+            <span>⏰</span>
+            <span>{event.time}</span>
+          </span>
+        )}
+      </div>
+
+      <h3 class="text-xl sm:text-2xl font-serif font-bold text-amber-950 group-hover:text-saffron transition-colors leading-snug">
+        {event.title}
+      </h3>
+
+      {event.description && (
+        <div class="text-stone-600 text-sm mt-1.5 line-clamp-2" set:html={event.description} />
+      )}
+    </div>
+  </div>
+
+  <!-- RIGHT: ACTION BUTTON -->
+  <div class="shrink-0 w-full sm:w-auto pt-2 sm:pt-0" onclick="event.stopPropagation()">
     {event.registration_link ? (
       <a
         href={event.registration_link}
         target="_blank"
         rel="noopener noreferrer"
-        class="mt-5 w-full py-3 rounded-2xl bg-saffron hover:bg-maroon text-white text-sm font-medium transition-all duration-300 shadow-md hover:shadow-lg hover:scale-[1.02] text-center"
-        style="cursor: pointer !important;"
+        class="block w-full sm:w-auto px-7 py-3 rounded-full bg-saffron hover:bg-maroon text-white text-sm font-semibold text-center transition-all duration-300 shadow-sm hover:shadow-md hover:scale-[1.03] cursor-pointer"
       >
         Register Now
       </a>
     ) : (
-      <button onclick={`openModal('${flyerUrl}', ${escapedTitle})`} class="mt-5 w-full py-3 rounded-2xl bg-saffron hover:bg-maroon text-white text-sm font-medium transition-all duration-300 shadow-md hover:shadow-lg hover:scale-[1.02]" style="cursor: pointer !important;">
+      <button
+        type="button"
+        onclick={`openModal('${flyerUrl}', ${escapedTitle})`}
+        class="w-full sm:w-auto px-7 py-3 rounded-full bg-saffron hover:bg-maroon text-white text-sm font-semibold text-center transition-all duration-300 shadow-sm hover:shadow-md hover:scale-[1.03] cursor-pointer"
+      >
         View Details
       </button>
     )}
