@@ -97,8 +97,9 @@ const videosWithMetadata = await Promise.all(videos.map(async (video) => {
       </div>
 
       <!-- PHOTO GALLERY SECTION -->
-      <section class="mb-20">
-        <h2 class="text-3xl md:text-4xl font-serif font-bold text-ink mb-8">Photo Albums</h2>
+      <section class="mb-24 py-12 relative">
+        <div class="absolute inset-0 bg-grid-pattern -z-10"></div>
+        <h2 class="text-3xl md:text-4xl font-serif font-bold text-ink mb-8 animate-fade-in-up">Photo Albums</h2>
         
         {error ? (
           <div class="text-center py-12 bg-red-50 border border-red-200 rounded-2xl">
@@ -112,8 +113,10 @@ const videosWithMetadata = await Promise.all(videos.map(async (video) => {
           </div>
         ) : (
           <div class="flex flex-col md:flex-row gap-6 md:gap-8 justify-center">
-            {albumsForComponent.map((album) => (
-              <GalleryAlbum title={album.title} photos={album.photos} />
+            {albumsForComponent.map((album, index) => (
+              <div class={`animate-fade-in-up animate-delay-${(index + 1) * 100}`}>
+                <GalleryAlbum title={album.title} photos={album.photos} />
+              </div>
             ))}
           </div>
         )}

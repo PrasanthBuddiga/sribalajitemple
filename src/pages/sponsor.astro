@@ -4,27 +4,13 @@ import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
 ---
 
-<script is:inline>
-  function openForm() {
-    document.getElementById('jotform-modal').classList.remove('hidden');
-    document.body.style.overflow = 'hidden';
-  }
-
-  function closeForm() {
-    document.getElementById('jotform-modal').classList.add('hidden');
-    document.body.style.overflow = '';
-  }
-
-  window.openForm = openForm;
-  window.closeForm = closeForm;
-</script>
-
 <Layout title="Sponsorship | Sri Balaji Temple">
   <Header />
   
-  <div class="pt-20 md:pt-24 pb-16 md:pb-20 px-4">
-    <div class="max-w-4xl mx-auto">
-      <div class="text-center mb-12">
+  <div class="pt-24 pb-24 px-6 relative">
+    <div class="absolute inset-0 bg-grid-pattern -z-10 pointer-events-none"></div>
+    <div class="max-w-5xl mx-auto relative z-10">
+      <div class="text-center mb-16 animate-fade-in-up">
         <h1 class="text-4xl md:text-5xl font-serif font-bold text-ink mb-4">Support Sri Balaji Temple</h1>
         <p class="text-ink-light text-lg max-w-2xl mx-auto">
           Your generous contributions help us maintain the temple, conduct daily poojas, and organize cultural events for the community.
@@ -32,12 +18,12 @@ import Footer from '../components/Footer.astro';
       </div>
 
       <!-- Sponsorship Options -->
-      <section class="mb-16">
+      <section class="mb-24">
         <h2 class="text-2xl font-serif font-bold text-ink mb-8 text-center">Sponsorship Opportunities</h2>
-        
+
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           <!-- Samoohika Lakshmi Pooja -->
-          <div class="rounded-2xl bg-white/80 border border-maroon/20 p-6 shadow-lg h-full flex flex-col">
+          <div class="rounded-[2rem] glass-card border border-maroon/10 p-6 shadow-lg h-full flex flex-col hover-lift hover-border-animate transition-all duration-300">
             <div class="w-16 h-16 rounded-full bg-gradient-to-br from-amber-400 to-rose-600 mx-auto mb-4 flex items-center justify-center">
               <span class="text-2xl">🪔</span>
             </div>
@@ -46,13 +32,13 @@ import Footer from '../components/Footer.astro';
             <p class="text-ink-light text-sm mb-4 flex-grow">
               Collective prayer ceremony dedicated to Goddess Mahalakshmi for wealth, prosperity, abundance, and well-being. Devotees gather to offer prayers, chant sacred hymns, and seek blessings.
             </p>
-            <button onclick="openForm()" class="inline-block w-full py-3 rounded-lg bg-saffron hover:bg-maroon text-white font-medium transition-colors text-center mt-auto cursor-pointer">
+            <button type="button" data-open-form class="inline-block w-full py-3 rounded-2xl bg-saffron hover:bg-maroon text-white font-medium transition-all duration-300 shadow-md hover:shadow-lg hover:scale-[1.02] text-center mt-auto cursor-pointer relative z-20">
               Sponsor Now
             </button>
           </div>
 
           <!-- Dolotsavam One Day -->
-          <div class="rounded-2xl bg-white/80 border border-maroon/20 p-6 shadow-lg h-full flex flex-col">
+          <div class="rounded-[2rem] glass-card border border-maroon/10 p-6 shadow-lg h-full flex flex-col hover-lift hover-border-animate transition-all duration-300">
             <div class="w-16 h-16 rounded-full bg-gradient-to-br from-amber-400 to-rose-600 mx-auto mb-4 flex items-center justify-center">
               <span class="text-2xl">🛕</span>
             </div>
@@ -61,13 +47,13 @@ import Footer from '../components/Footer.astro';
             <p class="text-ink-light text-sm mb-4 flex-grow">
               Divine Swing Festival of Lord Sri Venkateswara. Lord is ceremoniously seated on a decorated swing amidst Vedic chants and devotional music.
             </p>
-            <button onclick="openForm()" class="inline-block w-full py-3 rounded-lg bg-saffron hover:bg-maroon text-white font-medium transition-colors text-center mt-auto cursor-pointer">
+            <button type="button" data-open-form class="inline-block w-full py-3 rounded-2xl bg-saffron hover:bg-maroon text-white font-medium transition-all duration-300 shadow-md hover:shadow-lg hover:scale-[1.02] text-center mt-auto cursor-pointer relative z-20">
               Sponsor Now
             </button>
           </div>
 
           <!-- Dolotsavam All Days -->
-          <div class="rounded-2xl bg-white/80 border border-maroon/20 p-6 shadow-lg h-full flex flex-col">
+          <div class="rounded-[2rem] glass-card border border-maroon/10 p-6 shadow-lg h-full flex flex-col hover-lift hover-border-animate transition-all duration-300">
             <div class="w-16 h-16 rounded-full bg-gradient-to-br from-amber-400 to-rose-600 mx-auto mb-4 flex items-center justify-center">
               <span class="text-2xl">🛕</span>
             </div>
@@ -76,13 +62,13 @@ import Footer from '../components/Footer.astro';
             <p class="text-ink-light text-sm mb-4 flex-grow">
               Sponsor all four days of the Divine Swing Festival. Experience the complete spiritual journey with Lord Sri Venkateswara.
             </p>
-            <button onclick="openForm()" class="inline-block w-full py-3 rounded-lg bg-saffron hover:bg-maroon text-white font-medium transition-colors text-center mt-auto cursor-pointer">
+            <button type="button" data-open-form class="inline-block w-full py-3 rounded-2xl bg-saffron hover:bg-maroon text-white font-medium transition-all duration-300 shadow-md hover:shadow-lg hover:scale-[1.02] text-center mt-auto cursor-pointer relative z-20">
               Sponsor Now
             </button>
           </div>
 
           <!-- Daily Feast Sponsor (Annadanam) -->
-          <div class="rounded-2xl bg-white/80 border border-maroon/20 p-6 shadow-lg h-full flex flex-col">
+          <div class="rounded-[2rem] glass-card border border-maroon/10 p-6 shadow-lg h-full flex flex-col hover-lift hover-border-animate transition-all duration-300">
             <div class="w-16 h-16 rounded-full bg-gradient-to-br from-amber-400 to-rose-600 mx-auto mb-4 flex items-center justify-center">
               <span class="text-2xl">🍲</span>
             </div>
@@ -92,13 +78,13 @@ import Footer from '../components/Footer.astro';
               Support the community through the sacred service of Annadanam. Your contribution helps provide delicious prasadam and meals to devotees attending the event.
             </p>
             <p class="text-ink-light text-xs mb-4 font-medium">🙏 One of the highest forms of seva</p>
-            <button onclick="openForm()" class="inline-block w-full py-3 rounded-lg bg-saffron hover:bg-maroon text-white font-medium transition-colors text-center mt-auto cursor-pointer">
+            <button type="button" data-open-form class="inline-block w-full py-3 rounded-2xl bg-saffron hover:bg-maroon text-white font-medium transition-all duration-300 shadow-md hover:shadow-lg hover:scale-[1.02] text-center mt-auto cursor-pointer relative z-20">
               Sponsor Now
             </button>
           </div>
 
           <!-- Abhishekam -->
-          <div class="rounded-2xl bg-white/80 border border-maroon/20 p-6 shadow-lg h-full flex flex-col">
+          <div class="rounded-[2rem] glass-card border border-maroon/10 p-6 shadow-lg h-full flex flex-col hover-lift hover-border-animate transition-all duration-300">
             <div class="w-16 h-16 rounded-full bg-gradient-to-br from-amber-400 to-rose-600 mx-auto mb-4 flex items-center justify-center">
               <span class="text-2xl">🪔</span>
             </div>
@@ -107,13 +93,13 @@ import Footer from '../components/Footer.astro';
             <p class="text-ink-light text-sm mb-4 flex-grow">
               Experience the divine grace of Sri Venkateswara Swamy Abhishekam, a sacred ritual performed with devotion and Vedic chanting.
             </p>
-            <button onclick="openForm()" class="inline-block w-full py-3 rounded-lg bg-saffron hover:bg-maroon text-white font-medium transition-colors text-center mt-auto cursor-pointer">
+            <button type="button" data-open-form class="inline-block w-full py-3 rounded-2xl bg-saffron hover:bg-maroon text-white font-medium transition-all duration-300 shadow-md hover:shadow-lg hover:scale-[1.02] text-center mt-auto cursor-pointer relative z-20">
               Sponsor Now
             </button>
           </div>
 
           <!-- Archana -->
-          <div class="rounded-2xl bg-white/80 border border-maroon/20 p-6 shadow-lg h-full flex flex-col">
+          <div class="rounded-[2rem] glass-card border border-maroon/10 p-6 shadow-lg h-full flex flex-col hover-lift hover-border-animate transition-all duration-300">
             <div class="w-16 h-16 rounded-full bg-gradient-to-br from-amber-400 to-rose-600 mx-auto mb-4 flex items-center justify-center">
               <span class="text-2xl">🌸</span>
             </div>
@@ -123,7 +109,7 @@ import Footer from '../components/Footer.astro';
               Sponsor daily archana (worship) in your family's name. Receive blessings for you and your loved ones.
             </p>
             <p class="text-ink-light text-xs mb-4 font-medium">🙏 Daily worship sponsorship</p>
-            <button onclick="openForm()" class="inline-block w-full py-3 rounded-lg bg-saffron hover:bg-maroon text-white font-medium transition-colors text-center mt-auto cursor-pointer">
+            <button type="button" data-open-form class="inline-block w-full py-3 rounded-2xl bg-saffron hover:bg-maroon text-white font-medium transition-all duration-300 shadow-md hover:shadow-lg hover:scale-[1.02] text-center mt-auto cursor-pointer relative z-20">
               Sponsor Now
             </button>
           </div>
@@ -131,30 +117,30 @@ import Footer from '../components/Footer.astro';
       </section>
 
       <!-- Additional Options -->
-      <section class="mb-16">
+      <section class="mb-24">
         <h2 class="text-2xl font-serif font-bold text-ink mb-8 text-center">Additional Options</h2>
-        
+
         <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
           <!-- General Donation -->
-          <div class="rounded-2xl bg-white/80 border border-maroon/20 p-6 shadow-lg h-full flex flex-col">
+          <div class="rounded-[2rem] glass-card border border-maroon/10 p-6 shadow-lg h-full flex flex-col hover-lift hover-border-animate transition-all duration-300">
             <h3 class="text-lg font-bold text-ink mb-3">💝 General Donation</h3>
             <p class="text-ink-light text-sm mb-4 flex-grow">
               Make a general donation of any amount to support the temple's activities and maintenance.
             </p>
             <p class="text-saffron font-semibold mb-4">Starting at $1</p>
-            <button onclick="openForm()" class="inline-block w-full py-3 rounded-lg bg-cream hover:bg-maroon/10 text-maroon font-medium transition-colors text-center mt-auto cursor-pointer">
+            <button type="button" data-open-form class="inline-block w-full py-3 rounded-2xl bg-cream hover:bg-maroon/10 text-maroon font-medium transition-all duration-300 shadow-md hover:shadow-lg hover:scale-[1.02] text-center mt-auto cursor-pointer relative z-20">
               Donate Now
             </button>
           </div>
 
           <!-- Silver Coin Sahasranama Mala -->
-          <div class="rounded-2xl bg-white/80 border border-maroon/20 p-6 shadow-lg h-full flex flex-col">
+          <div class="rounded-[2rem] glass-card border border-maroon/10 p-6 shadow-lg h-full flex flex-col hover-lift hover-border-animate transition-all duration-300">
             <h3 class="text-lg font-bold text-ink mb-3">🪙 Lord Balaji Silver Coin Sahasranama Mala</h3>
             <p class="text-ink-light text-sm mb-4 flex-grow">
               Receive a sacred silver coin with Sahasranama Mala. A blessed item for your home shrine.
             </p>
             <p class="text-saffron font-semibold mb-4">$51 per coin (up to 100 coins)</p>
-            <button onclick="openForm()" class="inline-block w-full py-3 rounded-lg bg-cream hover:bg-maroon/10 text-maroon font-medium transition-colors text-center mt-auto cursor-pointer">
+            <button type="button" data-open-form class="inline-block w-full py-3 rounded-2xl bg-cream hover:bg-maroon/10 text-maroon font-medium transition-all duration-300 shadow-md hover:shadow-lg hover:scale-[1.02] text-center mt-auto cursor-pointer relative z-20">
               Order Now
             </button>
           </div>
@@ -162,19 +148,19 @@ import Footer from '../components/Footer.astro';
       </section>
 
       <!-- JotForm Modal -->
-      <div id="jotform-modal" class="hidden fixed inset-0 z-50 flex items-center justify-center p-0 md:p-4 bg-black/50 backdrop-blur-sm">
-        <div class="bg-white md:rounded-2xl shadow-2xl max-w-4xl w-full h-full md:max-h-[90vh] overflow-hidden flex flex-col">
-          <div class="flex items-center justify-between p-4 border-b border-maroon/20">
-            <h3 class="text-lg md:text-xl font-bold text-ink">Complete Your Sponsorship</h3>
-            <button onclick="closeForm()" class="text-ink-light hover:text-maroon transition-colors text-2xl font-bold cursor-pointer">
-              ✕
-            </button>
-          </div>
-          <div class="flex-1 overflow-auto p-0 md:p-4">
-            <script type="text/javascript" src="https://form.jotform.com/jsform/243641479186163" async></script>
-          </div>
-        </div>
-      </div>
+      <div id="jotform-modal" class="hidden fixed inset-x-0 bottom-0 top-20 z-40 flex items-center justify-center p-2 md:p-6 bg-black/50 backdrop-blur-sm">
+  <div class="bg-white md:rounded-2xl shadow-2xl max-w-4xl w-full h-full max-h-full overflow-hidden flex flex-col">
+    <div class="flex items-center justify-between p-4 border-b border-maroon/20 shrink-0">
+      <h3 class="text-lg md:text-xl font-bold text-ink">Complete Your Sponsorship</h3>
+      <button id="close-form-btn" type="button" class="text-ink-light hover:text-maroon transition-colors text-2xl font-bold cursor-pointer">
+        ✕
+      </button>
+    </div>
+    <div class="flex-1 overflow-auto p-0 md:p-4" id="form-container">
+      <!-- Form iframe gets injected here safely when opened -->
+    </div>
+  </div>
+</div>
 
       <!-- Contact Section -->
       <section class="bg-cream rounded-2xl p-8 border border-maroon/20">
@@ -197,6 +183,62 @@ import Footer from '../components/Footer.astro';
     </div>
   </div>
 
-  <!-- FOOTER -->
   <Footer />
 </Layout>
+
+<script>
+  function setupSponsorModal() {
+    const modal = document.getElementById('jotform-modal');
+    const formContainer = document.getElementById('form-container');
+    const closeBtn = document.getElementById('close-form-btn');
+    const openButtons = document.querySelectorAll('[data-open-form]');
+
+    if (!modal || !formContainer) return;
+
+    function openForm(e) {
+      e.preventDefault();
+      modal.classList.remove('hidden');
+      document.body.style.overflow = 'hidden';
+
+      if (!formContainer.querySelector('iframe')) {
+        const iframe = document.createElement('iframe');
+        iframe.src = "https://form.jotform.com/243641479186163";
+        iframe.style.width = "100%";
+        iframe.style.height = "100%";
+        iframe.style.minHeight = "600px";
+        iframe.style.border = "none";
+        iframe.setAttribute("allowfullscreen", "true");
+        formContainer.appendChild(iframe);
+      }
+    }
+
+    function closeForm() {
+      modal.classList.add('hidden');
+      document.body.style.overflow = '';
+    }
+
+    // Attach listener directly to each button and ensure cleanup of old duplicates
+    openButtons.forEach((button) => {
+      button.replaceWith(button.cloneNode(true));
+    });
+
+    // Re-query after clone replacement to bind fresh listeners
+    document.querySelectorAll('[data-open-form]').forEach((button) => {
+      button.addEventListener('click', openForm);
+    });
+
+    if (closeBtn) {
+      closeBtn.replaceWith(closeBtn.cloneNode(true));
+      document.getElementById('close-form-btn')?.addEventListener('click', closeForm);
+    }
+
+    modal.addEventListener('click', (e) => {
+      if (e.target === modal) {
+        closeForm();
+      }
+    });
+  }
+
+  setupSponsorModal();
+  document.addEventListener('astro:page-load', setupSponsorModal);
+</script>

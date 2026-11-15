@@ -10,32 +10,32 @@ const flyerUrl = event.image_url || 'https://via.placeholder.com/600x800?text=Te
 const escapedTitle = JSON.stringify(event.title);
 ---
 
-<div class="group rounded-2xl bg-white/80 border border-maroon/20 hover:border-saffron transition-all duration-300 overflow-hidden shadow-lg flex flex-col h-full">
+<div class="group rounded-[2rem] glass-card border border-maroon/10 hover:border-saffron/30 transition-all duration-300 overflow-hidden shadow-xl hover:shadow-2xl hover:shadow-maroon/10 flex flex-col h-full hover-lift hover-border-animate">
   <!-- THUMBNAIL (CLICK OPENS FULL FLYER) -->
-  <div class="relative h-48 md:h-52 overflow-hidden cursor-pointer" onclick={`openModal('${flyerUrl}', ${escapedTitle})`}>
-    <img src={flyerUrl} alt={event.title} class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" />
-    <div class="absolute inset-0 bg-maroon/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center text-xs font-semibold text-white uppercase tracking-wider backdrop-blur-xs">
-      Click to View Flyer
+  <div class="relative h-52 md:h-56 overflow-hidden cursor-pointer" onclick={`openModal('${flyerUrl}', ${escapedTitle})`}>
+    <img src={flyerUrl} alt={event.title} class="w-full h-full object-cover hover-zoom" />
+    <div class="absolute inset-0 bg-gradient-to-t from-maroon/80 via-maroon/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex items-end justify-center p-4">
+      <span class="text-white text-xs font-semibold uppercase tracking-wider backdrop-blur-sm">Click to View Flyer</span>
     </div>
   </div>
 
   <!-- CARD CONTENT -->
-  <div class="p-4 md:p-6 flex-1 flex flex-col justify-between">
+  <div class="p-5 md:p-6 flex-1 flex flex-col justify-between">
     <div>
       <h3 class="text-lg md:text-xl font-bold text-ink group-hover:text-saffron transition-colors">{event.title}</h3>
       <div class="text-ink-light text-sm mt-2 line-clamp-3" set:html={event.description} />
-      
+
       <!-- Event Details -->
-      <div class="mt-3 md:mt-4 space-y-1 md:space-y-2 text-xs md:text-sm text-ink-light">
+      <div class="mt-4 space-y-2 text-xs md:text-sm text-ink-light">
         {event.event_date && (
-  <p class="flex items-center">
-    <span class="text-saffron mr-2">📅</span>
-    {new Date(event.event_date).toLocaleDateString('en-US', { 
-      weekday: 'short', 
-      year: 'numeric', 
-      month: 'short', 
+          <p class="flex items-center">
+            <span class="text-saffron mr-2">📅</span>
+            {new Date(event.event_date).toLocaleDateString('en-US', {
+      weekday: 'short',
+      year: 'numeric',
+      month: 'short',
       day: 'numeric',
-      timeZone: 'UTC' // 🔒 Prevents timezone shifting!
+      timeZone: 'UTC'
     })}
   </p>
 )}
@@ -55,17 +55,18 @@ const escapedTitle = JSON.stringify(event.title);
     </div>
 
     {event.registration_link ? (
-      <a 
-        href={event.registration_link} 
-        target="_blank" 
+      <a
+        href={event.registration_link}
+        target="_blank"
         rel="noopener noreferrer"
-        class="mt-4 md:mt-6 w-full py-2.5 rounded-lg bg-saffron hover:bg-maroon text-white text-sm font-medium transition-colors shadow-md hover:shadow-lg text-center"
+        class="mt-5 w-full py-3 rounded-2xl bg-saffron hover:bg-maroon text-white text-sm font-medium transition-all duration-300 shadow-md hover:shadow-lg hover:scale-[1.02] text-center"
+        style="cursor: pointer !important;"
       >
         Register Now
       </a>
     ) : (
-      <button onclick={`openModal('${flyerUrl}', ${escapedTitle})`} class="mt-4 md:mt-6 w-full py-2.5 rounded-lg bg-saffron hover:bg-maroon text-white text-sm font-medium transition-colors shadow-md hover:shadow-lg">
-        View Event Flyer
+      <button onclick={`openModal('${flyerUrl}', ${escapedTitle})`} class="mt-5 w-full py-3 rounded-2xl bg-saffron hover:bg-maroon text-white text-sm font-medium transition-all duration-300 shadow-md hover:shadow-lg hover:scale-[1.02]" style="cursor: pointer !important;">
+        View Details
       </button>
     )}
   </div>
