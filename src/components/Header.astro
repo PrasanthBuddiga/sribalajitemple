@@ -2,6 +2,14 @@
 const currentPage = Astro.url.pathname;
 ---
 
+<!-- Load elegant serif title font (Playfair Display) & clean geometric nav font (Plus Jakarta Sans) -->
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link
+  href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;0,700;0,800;1,600&family=Plus+Jakarta+Sans:wght@500;600;700&display=swap"
+  rel="stylesheet"
+/>
+
 <script is:inline>
   function toggleMobileMenu() {
     const menu = document.getElementById('mobile-menu');
@@ -19,67 +27,85 @@ const currentPage = Astro.url.pathname;
   window.closeMobileMenu = closeMobileMenu;
 </script>
 
-<header class="fixed top-0 left-0 right-0 z-50 bg-cream/95 backdrop-blur-md border-b border-maroon/20 shadow-sm">
-  <nav class="max-w-6xl mx-auto px-4 py-3 md:py-4 flex items-center justify-between">
-    <!-- Logo -->
-    <a href="/" class="text-lg md:text-xl font-serif font-bold text-maroon hover:text-saffron transition-colors flex items-center">
-      Sri Balaji Temple
+<header class="fixed top-0 left-0 right-0 z-50 bg-[#FDFBF7]/95 backdrop-blur-md border-b border-amber-900/10">
+  <nav class="max-w-7xl mx-auto px-6 py-3.5 md:py-4 flex items-center justify-between">
+    <!-- Brand Logo (Classic, dignified temple typography) -->
+    <a
+      href="/"
+      class="group flex items-center gap-3 text-xl md:text-[26px] font-bold tracking-tight text-maroon hover:text-saffron transition-colors duration-300"
+      style="font-family: 'Playfair Display', serif;"
+    >
+      <span class="w-10 h-10 rounded-full bg-gradient-to-br from-amber-100 to-orange-100 border border-amber-500/25 flex items-center justify-center text-xl shadow-sm group-hover:scale-105 transition-transform duration-300">
+        🛕
+      </span>
+      <span>
+        Sri Balaji <span class="text-saffron group-hover:text-maroon transition-colors duration-300">Temple</span>
+      </span>
     </a>
-    
+
     <!-- Desktop Navigation -->
-    <div class="hidden md:flex items-center gap-6">
-      <a 
-        href="/" 
-        class={`text-sm font-medium transition-colors ${
-          currentPage === '/' ? 'text-saffron' : 'text-ink hover:text-saffron'
+    <div
+      class="hidden lg:flex items-center gap-7"
+      style="font-family: 'Plus Jakarta Sans', sans-serif;"
+    >
+      <a
+        href="/"
+        class={`text-[15px] font-semibold transition-colors duration-200 ${
+          currentPage === '/' ? 'text-saffron' : 'text-stone-700 hover:text-maroon'
         }`}
       >
         Home
       </a>
-      <a 
-        href="/about" 
-        class={`text-sm font-medium transition-colors ${
-          currentPage === '/about' ? 'text-saffron' : 'text-ink hover:text-saffron'
+      <a
+        href="/about"
+        class={`text-[15px] font-semibold transition-colors duration-200 ${
+          currentPage === '/about' ? 'text-saffron' : 'text-stone-700 hover:text-maroon'
         }`}
       >
         About
       </a>
-      <a 
-        href="/events" 
-        class={`text-sm font-medium transition-colors ${
-          currentPage === '/events' ? 'text-saffron' : 'text-ink hover:text-saffron'
+      <a
+        href="/events"
+        class={`text-[15px] font-semibold transition-colors duration-200 ${
+          currentPage === '/events' ? 'text-saffron' : 'text-stone-700 hover:text-maroon'
         }`}
       >
         Events
       </a>
-      <a 
-        href="/gallery" 
-        class={`text-sm font-medium transition-colors ${
-          currentPage === '/gallery' ? 'text-saffron' : 'text-ink hover:text-saffron'
+      <a
+        href="/gallery"
+        class={`text-[15px] font-semibold transition-colors duration-200 ${
+          currentPage === '/gallery' ? 'text-saffron' : 'text-stone-700 hover:text-maroon'
         }`}
       >
         Gallery
       </a>
-      <a 
-        href="/stotras" 
-        class={`text-sm font-medium transition-colors ${
-          currentPage === '/stotras' ? 'text-saffron' : 'text-ink hover:text-saffron'
+      <a
+        href="/stotras"
+        class={`text-[15px] font-semibold transition-colors duration-200 ${
+          currentPage === '/stotras' ? 'text-saffron' : 'text-stone-700 hover:text-maroon'
         }`}
       >
         Stotras
       </a>
-      <a 
-        href="/priest-services" 
-        class={`text-sm font-medium transition-colors ${
-          currentPage === '/priest-services' ? 'text-saffron' : 'text-ink hover:text-saffron'
+      <a
+        href="/priest-services"
+        class={`text-[15px] font-semibold transition-colors duration-200 ${
+          currentPage === '/priest-services' ? 'text-saffron' : 'text-stone-700 hover:text-maroon'
         }`}
       >
         Services
       </a>
-      <a 
-        href="/sponsor" 
-        class={`text-sm font-medium transition-colors ${
-          currentPage === '/sponsor' ? 'text-saffron' : 'text-ink hover:text-saffron'
+    </div>
+
+    <!-- Right Pill CTA Button (Clean Sponsor button without emoji) -->
+    <div class="hidden lg:flex items-center" style="font-family: 'Plus Jakarta Sans', sans-serif;">
+      <a
+        href="/sponsor"
+        class={`px-6 py-2.5 rounded-full font-bold text-sm text-white shadow-sm hover:shadow-md hover:scale-[1.03] transition-all duration-300 ${
+          currentPage === '/sponsor'
+            ? 'bg-maroon'
+            : 'bg-gradient-to-r from-[#D97736] to-[#C85A28] hover:from-maroon hover:to-maroon'
         }`}
       >
         Sponsor
@@ -87,9 +113,9 @@ const currentPage = Astro.url.pathname;
     </div>
 
     <!-- Mobile Menu Button -->
-    <button 
-      onclick="toggleMobileMenu()" 
-      class="md:hidden p-2 rounded-lg hover:bg-maroon/10 transition-colors"
+    <button
+      onclick="toggleMobileMenu()"
+      class="lg:hidden p-2 rounded-xl hover:bg-maroon/10 transition-colors cursor-pointer"
       aria-label="Toggle menu"
     >
       <svg class="w-6 h-6 text-maroon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -99,16 +125,22 @@ const currentPage = Astro.url.pathname;
   </nav>
 
   <!-- Mobile Menu -->
-  <div id="mobile-menu" class="hidden md:hidden fixed inset-0 z-[9999] bg-cream h-screen w-screen">
+  <div id="mobile-menu" class="hidden lg:hidden fixed inset-0 z-[9999] bg-[#FDFBF7] h-screen w-screen">
     <div class="flex flex-col h-full">
       <!-- Mobile Menu Header -->
-      <div class="flex items-center justify-between px-4 py-3 border-b border-maroon/20">
-        <a href="/" onclick="closeMobileMenu()" class="text-lg font-serif font-bold text-maroon">
-          Sri Balaji Temple
+      <div class="flex items-center justify-between px-6 py-4 border-b border-amber-900/10">
+        <a
+          href="/"
+          onclick="closeMobileMenu()"
+          class="flex items-center gap-2.5 text-xl font-bold text-maroon"
+          style="font-family: 'Playfair Display', serif;"
+        >
+          <span>🛕</span>
+          <span>Sri Balaji <span class="text-saffron">Temple</span></span>
         </a>
-        <button 
-          onclick="closeMobileMenu()" 
-          class="p-2 rounded-lg hover:bg-maroon/10 transition-colors"
+        <button
+          onclick="closeMobileMenu()"
+          class="p-2 rounded-xl hover:bg-maroon/10 transition-colors cursor-pointer"
           aria-label="Close menu"
         >
           <svg class="w-6 h-6 text-maroon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -118,81 +150,81 @@ const currentPage = Astro.url.pathname;
       </div>
 
       <!-- Mobile Menu Links -->
-      <div class="flex-1 overflow-auto px-4 py-6">
-        <div class="space-y-4">
-          <a 
-            href="/" 
+      <div class="flex-1 overflow-auto px-6 py-6" style="font-family: 'Plus Jakarta Sans', sans-serif;">
+        <div class="space-y-3">
+          <a
+            href="/"
             onclick="closeMobileMenu()"
-            class={`block px-4 py-4 rounded-lg font-medium transition-colors ${
-              currentPage === '/' 
-                ? 'bg-saffron text-white' 
-                : 'bg-white/50 text-ink hover:bg-maroon/10'
+            class={`block px-5 py-3.5 rounded-2xl font-semibold transition-colors ${
+              currentPage === '/'
+                ? 'bg-saffron text-white'
+                : 'bg-white text-stone-800 border border-amber-900/10 hover:bg-amber-50'
             }`}
           >
             Home
           </a>
-          <a 
-            href="/about" 
+          <a
+            href="/about"
             onclick="closeMobileMenu()"
-            class={`block px-4 py-4 rounded-lg font-medium transition-colors ${
-              currentPage === '/about' 
-                ? 'bg-saffron text-white' 
-                : 'bg-white/50 text-ink hover:bg-maroon/10'
+            class={`block px-5 py-3.5 rounded-2xl font-semibold transition-colors ${
+              currentPage === '/about'
+                ? 'bg-saffron text-white'
+                : 'bg-white text-stone-800 border border-amber-900/10 hover:bg-amber-50'
             }`}
           >
             About
           </a>
-          <a 
-            href="/events" 
+          <a
+            href="/events"
             onclick="closeMobileMenu()"
-            class={`block px-4 py-4 rounded-lg font-medium transition-colors ${
-              currentPage === '/events' 
-                ? 'bg-saffron text-white' 
-                : 'bg-white/50 text-ink hover:bg-maroon/10'
+            class={`block px-5 py-3.5 rounded-2xl font-semibold transition-colors ${
+              currentPage === '/events'
+                ? 'bg-saffron text-white'
+                : 'bg-white text-stone-800 border border-amber-900/10 hover:bg-amber-50'
             }`}
           >
             Events
           </a>
-          <a 
-            href="/gallery" 
+          <a
+            href="/gallery"
             onclick="closeMobileMenu()"
-            class={`block px-4 py-4 rounded-lg font-medium transition-colors ${
-              currentPage === '/gallery' 
-                ? 'bg-saffron text-white' 
-                : 'bg-white/50 text-ink hover:bg-maroon/10'
+            class={`block px-5 py-3.5 rounded-2xl font-semibold transition-colors ${
+              currentPage === '/gallery'
+                ? 'bg-saffron text-white'
+                : 'bg-white text-stone-800 border border-amber-900/10 hover:bg-amber-50'
             }`}
           >
             Gallery
           </a>
-          <a 
-            href="/stotras" 
+          <a
+            href="/stotras"
             onclick="closeMobileMenu()"
-            class={`block px-4 py-4 rounded-lg font-medium transition-colors ${
-              currentPage === '/stotras' 
-                ? 'bg-saffron text-white' 
-                : 'bg-white/50 text-ink hover:bg-maroon/10'
+            class={`block px-5 py-3.5 rounded-2xl font-semibold transition-colors ${
+              currentPage === '/stotras'
+                ? 'bg-saffron text-white'
+                : 'bg-white text-stone-800 border border-amber-900/10 hover:bg-amber-50'
             }`}
           >
             Stotras
           </a>
-          <a 
-            href="/priest-services" 
+          <a
+            href="/priest-services"
             onclick="closeMobileMenu()"
-            class={`block px-4 py-4 rounded-lg font-medium transition-colors ${
-              currentPage === '/priest-services' 
-                ? 'bg-saffron text-white' 
-                : 'bg-white/50 text-ink hover:bg-maroon/10'
+            class={`block px-5 py-3.5 rounded-2xl font-semibold transition-colors ${
+              currentPage === '/priest-services'
+                ? 'bg-saffron text-white'
+                : 'bg-white text-stone-800 border border-amber-900/10 hover:bg-amber-50'
             }`}
           >
             Services
           </a>
-          <a 
-            href="/sponsor" 
+          <a
+            href="/sponsor"
             onclick="closeMobileMenu()"
-            class={`block px-4 py-4 rounded-lg font-medium transition-colors ${
-              currentPage === '/sponsor' 
-                ? 'bg-saffron text-white' 
-                : 'bg-white/50 text-ink hover:bg-maroon/10'
+            class={`block px-5 py-3.5 rounded-2xl font-bold text-center transition-colors ${
+              currentPage === '/sponsor'
+                ? 'bg-maroon text-white'
+                : 'bg-gradient-to-r from-[#D97736] to-[#C85A28] text-white shadow-md'
             }`}
           >
             Sponsor
@@ -201,8 +233,8 @@ const currentPage = Astro.url.pathname;
       </div>
 
       <!-- Mobile Menu Footer -->
-      <div class="px-4 py-4 border-t border-maroon/20">
-        <p class="text-center text-ink-light text-sm">
+      <div class="px-6 py-4 border-t border-amber-900/10">
+        <p class="text-center text-stone-500 text-sm">
           12501 Bel-Red Rd, Bellevue, WA 98005
         </p>
       </div>
