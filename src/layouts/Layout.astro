@@ -35,22 +35,28 @@ const { title = 'Sri Balaji Temple | Bellevue, WA' } = Astro.props;
 <!-- Centered Shankha-Chakra-Namam (Zero Box Edges + Full Symbol Visibility) -->
 <div class="fixed inset-0 -z-10 pointer-events-none flex items-center justify-center overflow-hidden">
   <img 
-    src="/images/tirmula-golden-glow.jpg"
+    src="/images/tirmula-golden-glow.png"
     alt="" 
-    class="w-[460px] md:w-[540px] max-w-[85vw] h-auto object-contain opacity-25"
+    class="w-[210%] max-w-none sm:w-[155%] md:w-[1050px] lg:w-[1250px] h-auto object-contain opacity-25 md:opacity-20 mix-blend-multiply"
     style="
-      -webkit-mask-image: 
-        linear-gradient(to right, transparent 0%, black 22%, black 78%, transparent 100%),
-        linear-gradient(to bottom, transparent 0%, black 25%, black 75%, transparent 100%);
-      -webkit-mask-composite: source-in;
-      mask-image: 
-        linear-gradient(to right, transparent 0%, black 22%, black 78%, transparent 100%),
-        linear-gradient(to bottom, transparent 0%, black 25%, black 75%, transparent 100%);
-      mask-composite: intersect;
+      -webkit-mask-image: radial-gradient(ellipse 78% 48% at center, black 48%, transparent 88%);
+      mask-image: radial-gradient(ellipse 58% 48% at center, black 48%, transparent 88%);
     "
   />
 </div>
 
+<!-- Optimized Temple Gopuram Watermark (Smaller, Higher, Fainter) -->
+<!-- <div class="fixed top-1/4 left-0 right-0 -z-10 pointer-events-none flex justify-center overflow-hidden">
+  <img 
+    src="public/images/temple-gopuram-watermark.webp" 
+    alt="" 
+    class="w-[500px] md:w-[760px] h-auto object-contain opacity-[0.20] mix-blend-multiply"
+    style="
+      -webkit-mask-image: radial-gradient(ellipse at center, black 30%, transparent 80%); 
+      mask-image: radial-gradient(ellipse at center, black 30%, transparent 80%);
+    "
+  />
+</div> -->
   <script is:inline>
     // Show/hide back to top button based on scroll position
     const backToTopButton = document.getElementById('back-to-top');
